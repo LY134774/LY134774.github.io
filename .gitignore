@@ -1,0 +1,7 @@
+# 本地预览、检查截图与运行日志不发布
+preview-*.png
+preview-*.log
+server-*.log
+*.err.log
+*.out.log
+audit-*/
