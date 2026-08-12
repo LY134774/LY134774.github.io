@@ -178,20 +178,20 @@
         .hero {
             display: grid;
             grid-template-columns: repeat(12, 1fr);
-            gap: 2rem;
+            gap: clamp(1.5rem, 3vw, 4rem);
             align-items: center;
             padding-bottom: 9vh;
             padding-top: 12vh;
             border-bottom: 0;
         }
         .hero-content {
-            grid-column: 1 / 10;
+            grid-column: 1 / 8;
             display: flex;
             flex-direction: column;
-            gap: 2rem;
+            gap: 1.5rem;
         }
         .hero h1 {
-            font-size: clamp(4.4rem, 9.6vw, 12rem);
+            font-size: clamp(4.1rem, 7.5vw, 9.2rem);
             line-height: 1.04;
             letter-spacing: 0;
             color: var(--text-main);
@@ -209,6 +209,123 @@
             line-height: 1.4;
             max-width: 600px;
             color: var(--text-soft);
+        }
+        .hero-product-map {
+            grid-column: 8 / 13;
+            position: relative;
+            z-index: 1;
+            padding: clamp(1.25rem, 2vw, 2rem);
+            background: rgba(51, 46, 45, 0.62);
+            border: 1px solid var(--grid-line-strong);
+            border-radius: 28px;
+            backdrop-filter: blur(12px);
+        }
+        .hero-product-map-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+        }
+        .hero-product-map-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.3rem, 1.7vw, 1.8rem);
+            line-height: 1.28;
+            color: var(--text-main);
+        }
+        .hero-product-map-count {
+            font-family: var(--font-display);
+            font-size: 0.86rem;
+            color: var(--clay);
+            white-space: nowrap;
+        }
+        .hero-product-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.8rem;
+        }
+        .hero-product-item {
+            min-height: 104px;
+            padding: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 16px;
+            background: rgba(29, 24, 24, 0.52);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .hero-product-item span {
+            color: var(--clay);
+            font-family: var(--font-display);
+            font-size: 0.72rem;
+        }
+        .hero-product-item strong {
+            color: var(--text-main);
+            font-size: 0.98rem;
+            line-height: 1.38;
+            font-weight: 600;
+        }
+
+        #product-showcase {
+            min-height: auto;
+            padding-top: clamp(6rem, 10vh, 9rem);
+            padding-bottom: clamp(6rem, 10vh, 9rem);
+        }
+        .product-showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1.25rem;
+        }
+        .product-card {
+            grid-column: span 4;
+            min-height: 286px;
+            padding: clamp(1.5rem, 2.1vw, 2.2rem);
+            border: 1px solid var(--grid-line-strong);
+            border-radius: 24px;
+            background: linear-gradient(145deg, rgba(51, 46, 45, 0.94), rgba(35, 30, 29, 0.88));
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .product-card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+        .product-card-index {
+            font-family: var(--font-display);
+            color: var(--clay);
+            font-size: 0.82rem;
+        }
+        .product-card-kind {
+            color: var(--text-muted);
+            font-size: 0.72rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+        .product-card h3 {
+            font-size: clamp(1.55rem, 2vw, 2.1rem);
+            line-height: 1.25;
+            text-transform: none;
+        }
+        .product-card p {
+            color: var(--text-soft);
+            font-size: 1rem;
+            line-height: 1.68;
+        }
+        .product-card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: auto;
+        }
+        .product-card-tags span {
+            padding: 0.38rem 0.56rem;
+            border: 1px solid rgba(250, 217, 211, 0.25);
+            border-radius: 999px;
+            color: rgba(248, 242, 240, 0.82);
+            font-size: 0.76rem;
         }
 
         .profile-intro {
@@ -871,6 +988,14 @@
         }
 
         @media (max-width: 1024px) {
+            .hero-content,
+            .hero-product-map {
+                grid-column: 1 / -1;
+            }
+            .hero-product-map {
+                max-width: 760px;
+            }
+            .product-card { grid-column: span 6; }
             .profile-body {
                 grid-template-columns: 1fr;
             }
@@ -909,6 +1034,9 @@
                 grid-column: span 12;
                 min-height: 380px;
             }
+            .hero-product-grid { grid-template-columns: 1fr; }
+            .hero-product-item { min-height: 84px; }
+            .product-card { grid-column: span 12; }
             .video-card:nth-child(2n),
             .video-card:nth-child(2n):hover {
                 transform: translateY(0);
@@ -970,6 +1098,7 @@
         <div class="logo" vid="18">LINYAO</div>
         <div class="nav-menu">
             <a href="index.html">首页</a>
+            <a href="#product-showcase">产品</a>
             <a href="#works">作品集</a>
             <a href="ai-tools.html">AI工具</a>
             <a href="knowledge.html">知识库</a>
@@ -992,17 +1121,80 @@
                     <svg class="star-motif text-clay" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" vid="27">
                         <path d="M12 0L13.5 10.5L24 12L13.5 13.5L12 24L10.5 13.5L0 12L10.5 10.5L12 0Z" vid="28"></path>
                     </svg>
-                    <span class="meta-label" vid="29">AI 产品经理｜AI Agent / AIGC 自动化 / COMFYUI 工作流搭建/产品 UI 体验</span>
+                    <span class="meta-label" vid="29">AI 产品经理｜具备 AI Agent 开发经验｜从需求到可体验原型</span>
                 </div>
                 
-                <h1 class="hero-title-zh" vid="30"><span class="hero-title-line">用 AI</span><span class="hero-title-line">重构内容</span><span class="hero-title-line">生产流程</span></h1>
+                <h1 class="hero-title-zh" vid="30"><span class="hero-title-line">把 AI Agent</span><span class="hero-title-line">做成可用产品</span></h1>
                 
-                <p vid="33">我擅长把业务流程拆解成 Agent Loop，把 AIGC、自动化和内部工具做成团队真正能使用的产品系统。</p>
+                <p vid="33">聚焦 AI Agent、自动化和产品体验。我能把业务问题拆解成可执行流程，并开发成可以实际体验的独立产品。</p>
                 
                 <div class="btn-group" vid="34">
-                    <a href="#works" class="btn btn-primary" vid="35">观看视频作品</a>
-                    <a href="#projects" class="btn btn-secondary" vid="36">查看重点项目</a>
+                    <a href="#product-showcase" class="btn btn-primary" vid="35">查看 6 个产品</a>
+                    <a href="#works" class="btn btn-secondary" vid="36">查看视频作品</a>
                 </div>
+            </div>
+            <aside class="hero-product-map reveal" aria-label="6 个独立产品">
+                <div class="hero-product-map-header">
+                    <div>
+                        <span class="meta-label">Independent Products</span>
+                        <div class="hero-product-map-title">6 个独立产品，<br>证明我的产品落地能力。</div>
+                    </div>
+                    <span class="hero-product-map-count">01—06</span>
+                </div>
+                <div class="hero-product-grid">
+                    <div class="hero-product-item"><span>01</span><strong>自动化视频<br>生产平台</strong></div>
+                    <div class="hero-product-item"><span>02</span><strong>提示词收藏<br>工具插件</strong></div>
+                    <div class="hero-product-item"><span>03</span><strong>自媒体平台<br>自动发布</strong></div>
+                    <div class="hero-product-item"><span>04</span><strong>视频 AI<br>自动精剪</strong></div>
+                    <div class="hero-product-item"><span>05</span><strong>AI 换脸换装<br>工具</strong></div>
+                    <div class="hero-product-item"><span>06</span><strong>自研无线<br>画布工具</strong></div>
+                </div>
+            </aside>
+        </section>
+
+        <section id="product-showcase">
+            <div class="section-header" style="margin-bottom: 3rem;">
+                <span class="meta-label">[01] Independent Products</span>
+                <h2 class="section-title-lines"><span>我不只使用 AI，</span><span>也把它做成产品。</span></h2>
+                <p class="panel-desc" style="max-width: 760px;">以下 6 个产品分别服务于内容生产、创作效率、自动化发布和团队协作等不同场景。每个产品后续都可补充界面截图与脱敏演示版。</p>
+            </div>
+            <div class="product-showcase-grid">
+                <article class="product-card panel">
+                    <div class="product-card-top"><span class="product-card-index">PRODUCT .01</span><span class="product-card-kind">AI Agent</span></div>
+                    <h3>自动化视频生产平台</h3>
+                    <p>围绕内容生产流程设计 AI Agent 与任务编排，让重复的视频生产工作可以被拆解、组织和推进。</p>
+                    <div class="product-card-tags"><span>工作流设计</span><span>内容生产</span><span>产品原型</span></div>
+                </article>
+                <article class="product-card panel">
+                    <div class="product-card-top"><span class="product-card-index">PRODUCT .02</span><span class="product-card-kind">Plugin</span></div>
+                    <h3>提示词收藏工具插件</h3>
+                    <p>把分散在浏览网页与日常创作过程中的优质提示词，沉淀为可收藏、可整理、可复用的效率工具。</p>
+                    <div class="product-card-tags"><span>浏览器插件</span><span>知识沉淀</span><span>效率工具</span></div>
+                </article>
+                <article class="product-card panel">
+                    <div class="product-card-top"><span class="product-card-index">PRODUCT .03</span><span class="product-card-kind">Automation</span></div>
+                    <h3>自媒体平台自动发布</h3>
+                    <p>面向多账号、多平台的重复发布流程，探索可配置、可追踪的自动化分发与任务管理体验。</p>
+                    <div class="product-card-tags"><span>流程自动化</span><span>任务管理</span><span>多平台</span></div>
+                </article>
+                <article class="product-card panel">
+                    <div class="product-card-top"><span class="product-card-index">PRODUCT .04</span><span class="product-card-kind">AI Video</span></div>
+                    <h3>视频 AI 自动精剪</h3>
+                    <p>将长素材到可发布片段的剪辑过程产品化，减少人工筛选与重复处理，让视频创作更高效。</p>
+                    <div class="product-card-tags"><span>视频理解</span><span>剪辑流程</span><span>内容效率</span></div>
+                </article>
+                <article class="product-card panel">
+                    <div class="product-card-top"><span class="product-card-index">PRODUCT .05</span><span class="product-card-kind">AI Image</span></div>
+                    <h3>AI 换脸换装工具</h3>
+                    <p>围绕人物形象与服装编辑场景，将复杂的 AI 图像能力封装为更容易理解和操作的创作工具。</p>
+                    <div class="product-card-tags"><span>图像生成</span><span>产品交互</span><span>创作工具</span></div>
+                </article>
+                <article class="product-card panel">
+                    <div class="product-card-top"><span class="product-card-index">PRODUCT .06</span><span class="product-card-kind">Collaboration</span></div>
+                    <h3>自研无线画布工具</h3>
+                    <p>探索局域网环境下的轻量协作与内容组织体验，把零散的想法和信息放进可视化工作空间。</p>
+                    <div class="product-card-tags"><span>无线协作</span><span>可视化画布</span><span>工具产品</span></div>
+                </article>
             </div>
         </section>
 
@@ -1454,7 +1646,7 @@
         };
 
         function initCursorEffects() {
-            const glowTargets = document.querySelectorAll('.panel:not(.video-card), .stat-item, .future-card, .btn, .grid-3 > div');
+            const glowTargets = document.querySelectorAll('.panel:not(.video-card), .stat-item, .future-card, .btn, .grid-3 > div, .product-card');
 
             glowTargets.forEach((target) => {
                 if (target.classList.contains('video-card')) return;
