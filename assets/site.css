@@ -7,8 +7,8 @@
   --text-muted: #bdb6b4;
   --text-soft: rgba(248, 242, 240, 0.84);
   --grid-line-strong: rgba(255, 255, 255, 0.15);
-  --font-display: "DotGothic16", "Microsoft YaHei", monospace;
-  --font-body: "Inter", "Microsoft YaHei", sans-serif;
+  --font-display: "Segoe UI", "PingFang SC", "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
+  --font-body: var(--font-display);
   --container-padding: 4vw;
 }
 

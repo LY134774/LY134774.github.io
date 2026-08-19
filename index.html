@@ -1,11 +1,9 @@
+<!DOCTYPE html>
 <html lang="zh-CN" vid="0"><head vid="1">
     <meta charset="UTF-8" vid="2">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" vid="3">
     <title vid="4">林耀 | AI 产品经理作品集</title>
     <link rel="icon" href="data:," />
-    <link rel="preconnect" href="https://fonts.googleapis.com" vid="5">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" vid="6">
-    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet" vid="7">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" vid="8"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" vid="9"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" vid="10"></script>
@@ -22,8 +20,8 @@
             --grid-line-strong: rgba(255, 255, 255, 0.15);
             --surface: #332E2D;
             
-            --font-display: 'DotGothic16', monospace;
-            --font-body: 'Inter', sans-serif;
+            --font-body: "Segoe UI", "PingFang SC", "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
+            --font-display: var(--font-body);
             
             --spacing-base: 1rem;
             --container-padding: 4vw;
@@ -33,6 +31,10 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
@@ -54,6 +56,10 @@
             justify-content: flex-end;
             align-items: flex-end;
             padding: var(--container-padding);
+            animation: loader-safety-hide 0s linear 5s forwards;
+        }
+        @keyframes loader-safety-hide {
+            to { visibility: hidden; pointer-events: none; }
         }
         .counter {
             font-family: var(--font-display);
@@ -87,7 +93,7 @@
         h1, h2, h3, h4, .display-text {
             font-family: var(--font-display);
             text-transform: uppercase;
-            font-weight: 400;
+            font-weight: 700;
             margin: 0;
         }
 
@@ -128,17 +134,36 @@
             justify-content: center;
             border-bottom: 0;
         }
+        section[id] {
+            scroll-margin-top: 88px;
+        }
+
+        :where(h1, h2, h3, h4, .profile-lead, .panel-title) {
+            text-wrap: balance;
+            word-break: auto-phrase;
+        }
+        .keep-together {
+            white-space: nowrap;
+        }
+        .keep-word {
+            white-space: nowrap;
+        }
 
         
         nav {
             position: fixed;
             top: 0; left: 0; width: 100%;
-            padding: 2rem var(--container-padding);
+            padding: 1rem var(--container-padding);
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 100;
             mix-blend-mode: normal;
+            background: rgba(18, 15, 15, 0.86);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.18);
+            -webkit-backdrop-filter: blur(18px);
+            backdrop-filter: blur(18px);
         }
         .logo {
             font-family: var(--font-display);
@@ -156,7 +181,7 @@
         .nav-menu a {
             color: var(--text-muted);
             text-decoration: none;
-            font-size: 21px;
+            font-size: 0.95rem;
             transition: color 0.3s ease;
         }
         .nav-menu a:hover {
@@ -185,19 +210,25 @@
             border-bottom: 0;
         }
         .hero-content {
-            grid-column: 1 / 8;
+            grid-column: 2 / 12;
+            width: 100%;
+            max-width: 1320px;
+            margin: 0 auto;
             display: flex;
             flex-direction: column;
-            gap: 1.5rem;
+            align-items: center;
+            gap: clamp(1.35rem, 2.2vw, 2.25rem);
+            text-align: center;
         }
         .hero h1 {
-            font-size: clamp(4.1rem, 7.5vw, 9.2rem);
-            line-height: 1.04;
-            letter-spacing: 0;
+            font-size: clamp(4rem, 6vw, 7rem);
+            line-height: 1.06;
+            letter-spacing: -0.025em;
             color: var(--text-main);
         }
         .hero-title-zh {
-            max-width: 1080px;
+            width: 100%;
+            max-width: 1240px;
             text-transform: none;
         }
         .hero-title-zh .hero-title-line {
@@ -205,9 +236,9 @@
             white-space: nowrap;
         }
         .hero p {
-            font-size: clamp(1rem, 1.5vw, 1.5rem);
-            line-height: 1.4;
-            max-width: 600px;
+            font-size: clamp(1rem, 1.28vw, 1.32rem);
+            line-height: 1.55;
+            max-width: 920px;
             color: var(--text-soft);
         }
         .hero-product-map {
@@ -268,35 +299,78 @@
 
         #product-showcase {
             min-height: auto;
-            padding-top: clamp(6rem, 10vh, 9rem);
-            padding-bottom: clamp(6rem, 10vh, 9rem);
+            scroll-margin-top: 88px;
+            padding-top: clamp(6rem, 10vh, 8rem);
+            padding-bottom: clamp(6rem, 10vh, 8rem);
+            isolation: isolate;
         }
-        .product-showcase-grid {
+        #product-showcase::before {
+            content: "";
+            position: absolute;
+            inset: 2rem 2vw;
+            z-index: -1;
+            border-radius: 32px;
+            background: linear-gradient(180deg, rgba(20, 17, 17, 0.5), rgba(20, 17, 17, 0.92));
+            box-shadow: 0 36px 90px rgba(0, 0, 0, 0.22);
+            pointer-events: none;
+        }
+        .product-overview-header {
+            max-width: 920px;
+            margin: 0 auto clamp(2.5rem, 5vw, 4.5rem);
+            text-align: center;
+        }
+        .product-overview-header .section-title-lines {
+            margin: 1rem 0 1.25rem;
+        }
+        .product-overview-header .panel-desc {
+            max-width: 680px;
+            margin: 0 auto;
+        }
+        .product-overview-grid {
             display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 1.25rem;
+            width: min(1480px, 78vw);
+            margin-left: auto;
+            margin-right: auto;
+            grid-template-columns: repeat(6, minmax(0, 1fr));
+            gap: 1rem;
+            margin-bottom: clamp(7rem, 12vw, 11rem);
         }
-        .product-card {
-            grid-column: span 4;
-            min-height: 286px;
-            padding: clamp(1.5rem, 2.1vw, 2.2rem);
-            border: 1px solid var(--grid-line-strong);
-            border-radius: 24px;
-            background: linear-gradient(145deg, rgba(51, 46, 45, 0.94), rgba(35, 30, 29, 0.88));
+        .product-overview-card {
+            grid-column: span 2;
+            min-height: 360px;
+            padding: clamp(1.4rem, 2vw, 2rem);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 20px;
+            background: linear-gradient(150deg, rgba(51, 46, 45, 0.82), rgba(25, 21, 21, 0.9));
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            transition: transform 0.28s ease, border-color 0.28s ease, background 0.28s ease;
+        }
+        .product-overview-card:nth-child(4) {
+            grid-column: 2 / span 2;
+        }
+        .product-overview-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(250, 217, 211, 0.42);
+            background: linear-gradient(150deg, rgba(61, 53, 51, 0.9), rgba(29, 24, 24, 0.94));
         }
         .product-card-top {
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
             gap: 1rem;
+            margin-bottom: 2rem;
         }
         .product-card-index {
-            font-family: var(--font-display);
+            width: 42px;
+            height: 42px;
+            border: 1px solid rgba(250, 217, 211, 0.28);
+            border-radius: 12px;
+            display: grid;
+            place-items: center;
             color: var(--clay);
-            font-size: 0.82rem;
+            font-family: var(--font-display);
+            font-size: 0.76rem;
         }
         .product-card-kind {
             color: var(--text-muted);
@@ -304,28 +378,567 @@
             letter-spacing: 0.08em;
             text-transform: uppercase;
         }
-        .product-card h3 {
-            font-size: clamp(1.55rem, 2vw, 2.1rem);
+        .product-overview-card h3 {
+            min-height: 2.5em;
+            margin-bottom: 0.75rem;
+            font-family: var(--font-body);
+            font-size: clamp(1.2rem, 1.5vw, 1.52rem);
+            font-weight: 650;
             line-height: 1.25;
             text-transform: none;
         }
-        .product-card p {
-            color: var(--text-soft);
-            font-size: 1rem;
-            line-height: 1.68;
+        .product-card-desc {
+            min-height: 5.2em;
+            color: var(--text-muted);
+            font-size: 0.91rem;
+            line-height: 1.72;
         }
-        .product-card-tags {
+        .product-card-features {
+            display: grid;
+            gap: 0.7rem;
+            margin: 1.5rem 0 1.8rem;
+            list-style: none;
+        }
+        .product-card-features li {
+            position: relative;
+            padding-left: 1.05rem;
+            color: var(--text-soft);
+            font-size: 0.86rem;
+            line-height: 1.45;
+        }
+        .product-card-features li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0.55em;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--clay);
+        }
+        .product-card-action {
+            width: 100%;
+            min-height: 48px;
+            margin-top: auto;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            font-weight: 650;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: background 0.22s ease, border-color 0.22s ease, transform 0.22s ease;
+        }
+        .product-card-action:hover,
+        .product-card-action:focus-visible {
+            border-color: var(--clay);
+            background: var(--clay);
+            color: #211b1b;
+            outline: none;
+        }
+        .product-card-action:active {
+            transform: translateY(1px);
+        }
+        .product-detail-header {
+            max-width: 1020px;
+            margin-bottom: clamp(2.5rem, 5vw, 4rem);
+            scroll-margin-top: 120px;
+        }
+        .product-detail-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.55rem 0.82rem;
+            margin-bottom: 1.4rem;
+            border: 1px solid rgba(250, 217, 211, 0.3);
+            border-radius: 999px;
+            background: rgba(51, 46, 45, 0.68);
+            color: var(--text-soft);
+            font-size: 0.78rem;
+        }
+        .product-detail-headline {
+            max-width: 980px;
+            margin-bottom: 1.25rem;
+            font-size: clamp(2.5rem, 5.1vw, 6rem);
+            line-height: 1.04;
+            letter-spacing: -0.035em;
+            text-transform: none;
+        }
+        .product-detail-tagline {
+            max-width: 760px;
+            color: var(--text-muted);
+            font-size: clamp(1rem, 1.35vw, 1.2rem);
+            line-height: 1.7;
+        }
+        .product-tabs {
+            display: grid;
+            grid-template-columns: repeat(6, minmax(0, 1fr));
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        .product-tab {
+            min-height: 92px;
+            padding: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.13);
+            border-radius: 14px;
+            background: rgba(31, 27, 27, 0.82);
+            color: var(--text-main);
+            text-align: left;
+            font-family: var(--font-body);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 0.75rem;
+            transition: background 0.28s ease, border-color 0.28s ease, transform 0.28s ease;
+        }
+        .product-tab:hover {
+            transform: translateY(-3px);
+            border-color: rgba(250, 217, 211, 0.38);
+            background: rgba(51, 46, 45, 0.9);
+        }
+        .product-tab:focus-visible {
+            outline: 2px solid var(--clay);
+            outline-offset: 3px;
+        }
+        .product-tab[aria-selected="true"] {
+            border-color: rgba(250, 217, 211, 0.78);
+            background: linear-gradient(145deg, rgba(78, 68, 66, 0.92), rgba(45, 39, 38, 0.94));
+            box-shadow: inset 0 0 0 1px rgba(250, 217, 211, 0.08), 0 14px 32px rgba(0, 0, 0, 0.18);
+        }
+        .product-tab-index {
+            color: var(--clay);
+            font-family: var(--font-display);
+            font-size: 0.72rem;
+        }
+        .product-tab-title {
+            font-size: 0.9rem;
+            font-weight: 650;
+            line-height: 1.38;
+        }
+        .product-focus {
+            overflow: visible;
+        }
+        .product-focus-summary {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+            min-height: 76px;
+            margin-bottom: 1rem;
+            padding: 1rem 1.25rem;
+            border: 1px solid rgba(255, 255, 255, 0.13);
+            border-radius: 14px;
+            background: rgba(26, 22, 22, 0.86);
+        }
+        .product-focus-heading {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        .product-focus-badge {
+            flex: 0 0 auto;
+            margin-top: 0.2rem;
+            padding: 0.42rem 0.64rem;
+            border: 1px solid rgba(250, 217, 211, 0.28);
+            border-radius: 999px;
+            color: rgba(248, 242, 240, 0.78);
+            font-size: 0.72rem;
+            white-space: nowrap;
+        }
+        .product-focus-title {
+            font-family: var(--font-body);
+            font-size: 1rem;
+            font-weight: 650;
+            line-height: 1.14;
+            text-transform: none;
+            margin-bottom: 0.35rem;
+        }
+        .product-focus-tagline {
+            max-width: 760px;
+            color: var(--text-soft);
+            font-size: clamp(0.98rem, 1.2vw, 1.12rem);
+            line-height: 1.65;
+        }
+        .product-focus-count {
+            flex: 0 0 auto;
+            font-family: var(--font-display);
+            color: var(--clay);
+            font-size: 0.82rem;
+            letter-spacing: 0.06em;
+        }
+        .product-focus-body {
+            padding: 0;
+        }
+        .product-media-frame {
+            position: relative;
+            min-height: clamp(420px, 51vw, 760px);
+            border: 1px solid rgba(255, 255, 255, 0.13);
+            border-radius: 20px;
+            overflow: hidden;
+            background:
+                linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+                radial-gradient(circle at 50% 45%, rgba(250, 217, 211, 0.08), transparent 42%),
+                #121010;
+            background-size: 28px 28px, 28px 28px, auto, auto;
+            display: grid;
+            place-items: center;
+        }
+        .product-media-frame::before,
+        .product-media-frame::after {
+            content: "";
+            position: absolute;
+            width: 38px;
+            height: 38px;
+            pointer-events: none;
+        }
+        .product-media-frame::before {
+            top: 18px;
+            left: 18px;
+            border-top: 1px solid rgba(250, 217, 211, 0.48);
+            border-left: 1px solid rgba(250, 217, 211, 0.48);
+        }
+        .product-media-frame::after {
+            right: 18px;
+            bottom: 18px;
+            border-right: 1px solid rgba(250, 217, 211, 0.48);
+            border-bottom: 1px solid rgba(250, 217, 211, 0.48);
+        }
+        .product-media-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: none;
+        }
+        .product-media-placeholder {
+            position: relative;
+            z-index: 1;
+            width: min(560px, 78%);
+            padding: clamp(2rem, 5vw, 4rem);
+            border: 1px dashed rgba(250, 217, 211, 0.32);
+            border-radius: 18px;
+            background: rgba(29, 24, 24, 0.72);
+            text-align: center;
+        }
+        .product-media-placeholder-index {
+            display: block;
+            margin-bottom: 1.1rem;
+            color: var(--clay);
+            font-family: var(--font-display);
+            font-size: clamp(2.4rem, 5vw, 4.6rem);
+            line-height: 1;
+        }
+        .product-media-placeholder strong {
+            display: block;
+            font-size: clamp(1.2rem, 2vw, 1.8rem);
+            margin-bottom: 0.75rem;
+        }
+        .product-media-placeholder p {
+            color: var(--text-muted);
+            font-size: 0.94rem;
+            line-height: 1.65;
+        }
+        .product-focus-details {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .product-detail-block {
+            min-height: 180px;
+            padding: clamp(1.25rem, 2vw, 1.8rem);
+            border: 1px solid rgba(255, 255, 255, 0.11);
+            border-radius: 18px;
+            background: rgba(42, 36, 35, 0.78);
+        }
+        .product-detail-block h3 {
+            margin-bottom: 0.8rem;
+            color: var(--clay);
+            font-family: var(--font-body);
+            font-size: 0.76rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+        .product-detail-block p {
+            color: var(--text-soft);
+            font-size: 0.98rem;
+            line-height: 1.7;
+        }
+        .product-capability-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: auto;
+            gap: 0.7rem;
+            margin-top: 1rem;
         }
-        .product-card-tags span {
-            padding: 0.38rem 0.56rem;
-            border: 1px solid rgba(250, 217, 211, 0.25);
+        .product-capability-tag {
+            padding: 0.66rem 0.9rem;
+            border: 1px solid rgba(250, 217, 211, 0.2);
             border-radius: 999px;
-            color: rgba(248, 242, 240, 0.82);
+            background: rgba(250, 217, 211, 0.06);
+            color: var(--text-soft);
+            font-size: 0.82rem;
+        }
+        .product-focus-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1rem;
+            padding: 1rem 0 0;
+        }
+        .product-focus-note {
+            color: var(--text-muted);
+            font-size: 0.82rem;
+            line-height: 1.55;
+        }
+        .product-demo-link[hidden] {
+            display: none;
+        }
+        .product-focus.is-switching .product-focus-summary,
+        .product-focus.is-switching .product-focus-body,
+        .product-detail-header.is-switching {
+            opacity: 0.35;
+            transform: translateY(5px);
+        }
+        .product-focus-summary,
+        .product-focus-body,
+        .product-detail-header {
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        .project-stories {
+            display: grid;
+            margin-top: clamp(2rem, 4vw, 4rem);
+            gap: clamp(6rem, 10vw, 9rem);
+        }
+        .project-story {
+            position: relative;
+            width: min(1480px, 78vw);
+            margin: 0 auto;
+            scroll-margin-top: 110px;
+        }
+        .project-story-head {
+            max-width: 1120px;
+            margin: 0 auto clamp(2rem, 4vw, 3.25rem);
+            text-align: center;
+        }
+        .project-story-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.55rem;
+            padding: 0.55rem 0.85rem;
+            margin-bottom: 1.4rem;
+            border: 1px solid rgba(250, 217, 211, 0.28);
+            border-radius: 999px;
+            background: rgba(51, 46, 45, 0.68);
+            color: var(--clay);
+            font-size: 0.78rem;
+            font-weight: 650;
+        }
+        .project-story-title {
+            max-width: 1120px;
+            margin-bottom: 1.25rem;
+            font-size: clamp(2.2rem, 3.7vw, 4.4rem);
+            line-height: 1.1;
+            letter-spacing: -0.035em;
+            text-transform: none;
+        }
+        .project-title-line {
+            display: block;
+        }
+        .project-story-lead {
+            max-width: 920px;
+            margin: 0 auto;
+            color: var(--text-muted);
+            font-size: clamp(1rem, 1.35vw, 1.22rem);
+            line-height: 1.7;
+        }
+        .project-mode-tabs {
+            display: grid;
+            grid-template-columns: repeat(var(--mode-count, 4), minmax(0, 1fr));
+            gap: 0.7rem;
+            margin-bottom: 1rem;
+        }
+        .project-mode-tab {
+            min-height: 102px;
+            padding: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.13);
+            border-radius: 14px;
+            background: rgba(27, 23, 23, 0.82);
+            color: var(--text-main);
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 0.45rem;
+            transition: transform 0.24s ease, border-color 0.24s ease, background 0.24s ease;
+        }
+        .project-mode-tab:hover {
+            transform: translateY(-3px);
+            border-color: rgba(250, 217, 211, 0.38);
+        }
+        .project-mode-tab:focus-visible {
+            outline: 2px solid var(--clay);
+            outline-offset: 3px;
+        }
+        .project-mode-tab[aria-selected="true"] {
+            border-color: rgba(250, 217, 211, 0.72);
+            background: linear-gradient(145deg, rgba(75, 65, 63, 0.9), rgba(40, 34, 34, 0.94));
+            box-shadow: inset 0 0 0 1px rgba(250, 217, 211, 0.08);
+        }
+        .project-mode-index {
+            color: var(--clay);
+            font-family: var(--font-display);
+            font-size: 0.7rem;
+        }
+        .project-mode-name {
+            font-size: 0.93rem;
+            font-weight: 650;
+            line-height: 1.3;
+        }
+        .project-mode-desc {
+            color: var(--text-muted);
             font-size: 0.76rem;
+            line-height: 1.45;
+        }
+        .project-stage {
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 20px;
+            background: rgba(16, 14, 14, 0.94);
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.22);
+        }
+        .project-stage-note {
+            min-height: 72px;
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .project-stage-note strong {
+            flex: 0 0 auto;
+            color: var(--text-main);
+            font-size: 0.92rem;
+        }
+        .project-stage-note span {
+            color: var(--text-muted);
+            font-size: 0.84rem;
+            line-height: 1.5;
+        }
+        .project-stage-media {
+            position: relative;
+            min-height: clamp(380px, 46vw, 660px);
+            padding: clamp(1rem, 2vw, 1.6rem);
+            background:
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                radial-gradient(circle at 50% 42%, rgba(250, 217, 211, 0.08), transparent 42%),
+                #121010;
+            background-size: 28px 28px, 28px 28px, auto, auto;
+            display: grid;
+            place-items: center;
+        }
+        .project-stage-image {
+            width: 100%;
+            height: 100%;
+            max-height: 620px;
+            object-fit: contain;
+            border-radius: 12px;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+        .project-stage-image-button {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            padding: 0;
+            background: transparent;
+            cursor: zoom-in;
+            display: grid;
+            place-items: center;
+        }
+        .project-stage-image-button:focus-visible {
+            outline: 2px solid var(--clay);
+            outline-offset: -4px;
+            border-radius: 12px;
+        }
+        .project-stage-image-button[hidden] { display: none; }
+        .project-stage-placeholder {
+            width: min(600px, 82%);
+            padding: clamp(2rem, 5vw, 4rem);
+            border: 1px dashed rgba(250, 217, 211, 0.3);
+            border-radius: 16px;
+            background: rgba(31, 26, 26, 0.82);
+            text-align: center;
+        }
+        .project-stage-placeholder strong {
+            display: block;
+            margin-bottom: 0.75rem;
+            font-size: clamp(1.2rem, 2vw, 1.8rem);
+        }
+        .project-stage-placeholder p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+        .project-stage.is-switching .project-stage-note,
+        .project-stage.is-switching .project-stage-media {
+            opacity: 0.38;
+            transform: translateY(4px);
+        }
+        .project-stage-note,
+        .project-stage-media {
+            transition: opacity 0.18s ease, transform 0.18s ease;
+        }
+        .project-image-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 1200;
+            padding: clamp(1rem, 3vw, 3rem);
+            background: rgba(10, 8, 8, 0.94);
+            backdrop-filter: blur(16px);
+            display: grid;
+            place-items: center;
+        }
+        .project-image-modal[hidden] { display: none; }
+        .project-image-modal img {
+            max-width: 100%;
+            max-height: calc(100vh - 6rem);
+            object-fit: contain;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 16px;
+            box-shadow: 0 32px 100px rgba(0, 0, 0, 0.46);
+        }
+        .project-image-modal-close {
+            position: fixed;
+            top: 1.2rem;
+            right: 1.2rem;
+            min-width: 48px;
+            min-height: 48px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 999px;
+            background: rgba(36, 31, 31, 0.94);
+            color: var(--text-main);
+            font: 600 0.88rem var(--font-body);
+            cursor: pointer;
+        }
+
+        @media (max-width: 1024px) {
+            .project-mode-tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .product-overview-card,
+            .product-overview-card:nth-child(4) { grid-column: auto; }
+        }
+        @media (max-width: 640px) {
+            .project-mode-tabs { grid-template-columns: 1fr; }
+            .project-mode-tab { min-height: auto; }
+            .project-stage-note { align-items: flex-start; flex-direction: column; }
+            .project-stage-media { min-height: 380px; }
         }
 
         .profile-intro {
@@ -338,26 +951,15 @@
             isolation: isolate;
             border-top: 0;
         }
-        .profile-intro::before {
-            content: "";
-            position: absolute;
-            left: 0;
-            top: 8%;
-            width: min(760px, 62vw);
-            height: min(520px, 48vw);
-            background: radial-gradient(circle at 22% 38%, rgba(92, 213, 222, 0.16), rgba(92, 213, 222, 0.07) 36%, transparent 72%);
-            filter: blur(10px);
-            pointer-events: none;
-            z-index: 0;
-        }
         .profile-copy {
             position: relative;
             z-index: 1;
             width: 100%;
-            max-width: none;
+            max-width: 1480px;
+            margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            column-gap: 2rem;
+            grid-template-columns: minmax(260px, 0.72fr) minmax(0, 1.45fr);
+            column-gap: clamp(3rem, 6vw, 7rem);
             row-gap: 1.05rem;
             align-items: start;
         }
@@ -365,7 +967,7 @@
             display: flex;
             align-items: center;
             gap: 0.7rem;
-            grid-column: 1 / 13;
+            grid-column: 1 / -1;
             grid-row: 1;
             align-self: start;
             margin: 0 0 0.7rem 0;
@@ -385,7 +987,7 @@
             line-height: 0.96;
             letter-spacing: 0;
             color: var(--text-main);
-            grid-column: 1 / 5;
+            grid-column: 1;
             grid-row: 2;
             margin-bottom: -0.15rem;
             font-weight: 800;
@@ -394,7 +996,7 @@
             font-size: clamp(1.18rem, 1.8vw, 1.95rem);
             line-height: 1.42;
             color: var(--text-main);
-            grid-column: 1 / 5;
+            grid-column: 1;
             grid-row: 3;
             max-width: 720px;
             font-weight: 650;
@@ -406,14 +1008,14 @@
             white-space: nowrap;
         }
         .profile-body {
-            grid-column: 6 / 13;
-            grid-row: 1 / span 3;
+            grid-column: 2;
+            grid-row: 2 / span 2;
             display: grid;
-            grid-template-columns: minmax(0, 1.08fr) minmax(310px, 0.7fr);
+            grid-template-columns: minmax(0, 1fr);
             gap: clamp(1.5rem, 3vw, 3rem);
             align-items: center;
             align-self: start;
-            padding-top: clamp(2.2rem, 4.2vh, 3.4rem);
+            padding-top: 0.35rem;
         }
         .profile-paragraphs {
             max-width: 900px;
@@ -535,7 +1137,7 @@
         .section-title-lines {
             max-width: none;
         }
-        .section-title-lines span {
+        .section-title-lines > span {
             display: block;
             white-space: nowrap;
         }
@@ -995,10 +1597,17 @@
             .hero-product-map {
                 max-width: 760px;
             }
-            .product-card { grid-column: span 6; }
+            .product-overview-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .product-tabs { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+            .profile-copy { grid-template-columns: 1fr; }
+            .profile-kicker,
+            .profile-name,
+            .profile-lead,
             .profile-body {
-                grid-template-columns: 1fr;
+                grid-column: 1;
+                grid-row: auto;
             }
+            .profile-body { grid-template-columns: 1fr; padding-top: 1rem; }
             .profile-tags {
                 max-width: 720px;
             }
@@ -1008,19 +1617,20 @@
 
         @media (max-width: 768px) {
             nav {
-                align-items: flex-start;
-                gap: 1rem;
+                align-items: center;
+                gap: 0.75rem;
+                padding-top: 0.75rem;
+                padding-bottom: 0.75rem;
             }
+            .logo { font-size: 1rem; }
             .nav-menu {
-                position: absolute;
-                top: 4.5rem;
-                left: var(--container-padding);
-                right: var(--container-padding);
+                position: static;
+                flex: 1 1 auto;
                 display: flex;
                 justify-content: flex-start;
-                gap: 1.2rem;
+                gap: 0.9rem;
                 overflow-x: auto;
-                padding-bottom: 0.5rem;
+                padding: 0.25rem 0;
                 scrollbar-width: none;
             }
             .nav-menu::-webkit-scrollbar {
@@ -1030,13 +1640,35 @@
                 flex: 0 0 auto;
                 font-size: 0.78rem;
             }
+            .nav-status { display: none; }
+            .hero {
+                padding-top: 6.5rem;
+            }
+            .hero h1 {
+                font-size: clamp(1.85rem, 7.5vw, 3.15rem);
+                line-height: 1.08;
+            }
+            .hero-title-zh .hero-title-line {
+                white-space: normal;
+            }
             .video-card {
                 grid-column: span 12;
                 min-height: 380px;
             }
             .hero-product-grid { grid-template-columns: 1fr; }
             .hero-product-item { min-height: 84px; }
-            .product-card { grid-column: span 12; }
+            .product-overview-grid { grid-template-columns: 1fr; }
+            .product-overview-card { min-height: auto; }
+            .product-card-desc { min-height: auto; }
+            .product-tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .product-tab { min-height: 92px; }
+            .product-focus-summary { flex-direction: column; gap: 1rem; }
+            .product-focus-count { align-self: flex-end; }
+            .product-focus-heading { flex-direction: column; }
+            .product-media-frame { min-height: 360px; }
+            .product-focus-details { grid-template-columns: 1fr; }
+            .product-detail-block { min-height: auto; }
+            .product-focus-footer { align-items: flex-start; flex-direction: column; }
             .video-card:nth-child(2n),
             .video-card:nth-child(2n):hover {
                 transform: translateY(0);
@@ -1058,7 +1690,7 @@
             .profile-tags {
                 grid-template-columns: 1fr;
             }
-            .section-title-lines span {
+            .section-title-lines > span {
                 white-space: normal;
             }
             .btn-group {
@@ -1100,9 +1732,8 @@
             <a href="index.html">首页</a>
             <a href="#product-showcase">产品</a>
             <a href="#works">作品集</a>
-            <a href="ai-tools.html">AI工具</a>
-            <a href="knowledge.html">知识库</a>
-            <a href="tutorials.html">AI教程</a>
+            <a href="#profile">关于我</a>
+            <a href="#methodology">方法</a>
             <a href="#cta">联系</a>
         </div>
         <div class="nav-status" vid="19">
@@ -1116,130 +1747,115 @@
         <section class="hero" vid="23">
             <div class="monumental-vertical" vid="24">Portfolio</div>
             
-            <div class="hero-content reveal" vid="25">
+            <div class="hero-content" vid="25">
                 <div style="display: flex; align-items: center; gap: 1rem;" vid="26">
                     <svg class="star-motif text-clay" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" vid="27">
                         <path d="M12 0L13.5 10.5L24 12L13.5 13.5L12 24L10.5 13.5L0 12L10.5 10.5L12 0Z" vid="28"></path>
                     </svg>
-                    <span class="meta-label" vid="29">AI 产品经理｜具备 AI Agent 开发经验｜从需求到可体验原型</span>
+                    <span class="meta-label" vid="29">AI 产品经理｜AI AGENT 产品设计与开发｜AIGC 自动化实践</span>
                 </div>
                 
-                <h1 class="hero-title-zh" vid="30"><span class="hero-title-line">把 AI Agent</span><span class="hero-title-line">做成可用产品</span></h1>
+                <h1 class="hero-title-zh" vid="30"><span class="hero-title-line">重构内容生产链路</span><span class="hero-title-line">构建 AI 原生生产系统</span></h1>
                 
-                <p vid="33">聚焦 AI Agent、自动化和产品体验。我能把业务问题拆解成可执行流程，并开发成可以实际体验的独立产品。</p>
+                <p vid="33">覆盖 AI Agent、内容自动化与多模态生成，从需求分析、产品设计、工作流搭建、界面交互到开发部署，全流程独立完成。</p>
                 
                 <div class="btn-group" vid="34">
-                    <a href="#product-showcase" class="btn btn-primary" vid="35">查看 6 个产品</a>
+                    <a href="#product-showcase" class="btn btn-primary" vid="35">查看 5 个产品</a>
                     <a href="#works" class="btn btn-secondary" vid="36">查看视频作品</a>
                 </div>
             </div>
-            <aside class="hero-product-map reveal" aria-label="6 个独立产品">
-                <div class="hero-product-map-header">
-                    <div>
-                        <span class="meta-label">Independent Products</span>
-                        <div class="hero-product-map-title">6 个独立产品，<br>证明我的产品落地能力。</div>
-                    </div>
-                    <span class="hero-product-map-count">01—06</span>
-                </div>
-                <div class="hero-product-grid">
-                    <div class="hero-product-item"><span>01</span><strong>自动化视频<br>生产平台</strong></div>
-                    <div class="hero-product-item"><span>02</span><strong>提示词收藏<br>工具插件</strong></div>
-                    <div class="hero-product-item"><span>03</span><strong>自媒体平台<br>自动发布</strong></div>
-                    <div class="hero-product-item"><span>04</span><strong>视频 AI<br>自动精剪</strong></div>
-                    <div class="hero-product-item"><span>05</span><strong>AI 换脸换装<br>工具</strong></div>
-                    <div class="hero-product-item"><span>06</span><strong>自研无线<br>画布工具</strong></div>
-                </div>
-            </aside>
         </section>
 
         <section id="product-showcase">
-            <div class="section-header" style="margin-bottom: 3rem;">
-                <span class="meta-label">[01] Independent Products</span>
-                <h2 class="section-title-lines"><span>我不只使用 AI，</span><span>也把它做成产品。</span></h2>
-                <p class="panel-desc" style="max-width: 760px;">以下 6 个产品分别服务于内容生产、创作效率、自动化发布和团队协作等不同场景。每个产品后续都可补充界面截图与脱敏演示版。</p>
+            <div class="product-overview-header">
+                <span class="meta-label">[01] Deployed Products / Independently Built</span>
+                <h2 class="section-title-lines"><span>5 个独立开发并投入使用的产品</span></h2>
+                <p class="panel-desc">覆盖 AI Agent、浏览器插件、自动发布、视觉生成与无限画布；从需求分析、产品设计、界面交互到开发部署，均由我独立完成。</p>
             </div>
-            <div class="product-showcase-grid">
-                <article class="product-card panel">
-                    <div class="product-card-top"><span class="product-card-index">PRODUCT .01</span><span class="product-card-kind">AI Agent</span></div>
+            <div class="product-overview-grid" aria-label="5 个产品概览">
+                <article class="product-overview-card">
+                    <div class="product-card-top"><span class="product-card-index">01</span><span class="product-card-kind">AI Agent</span></div>
                     <h3>自动化视频生产平台</h3>
-                    <p>围绕内容生产流程设计 AI Agent 与任务编排，让重复的视频生产工作可以被拆解、组织和推进。</p>
-                    <div class="product-card-tags"><span>工作流设计</span><span>内容生产</span><span>产品原型</span></div>
+                    <p class="product-card-desc">把行业输入、选题、文案、视频生成、发布设置和任务结果组织为一条完整生产流程。</p>
+                    <ul class="product-card-features"><li>五步内容生产流程</li><li>人工确认与异常反馈</li><li>任务状态和结果追踪</li></ul>
+                    <a class="product-card-action" href="#project-video-production">查看项目</a>
                 </article>
-                <article class="product-card panel">
-                    <div class="product-card-top"><span class="product-card-index">PRODUCT .02</span><span class="product-card-kind">Plugin</span></div>
+                <article class="product-overview-card">
+                    <div class="product-card-top"><span class="product-card-index">02</span><span class="product-card-kind">Browser Plugin</span></div>
                     <h3>提示词收藏工具插件</h3>
-                    <p>把分散在浏览网页与日常创作过程中的优质提示词，沉淀为可收藏、可整理、可复用的效率工具。</p>
-                    <div class="product-card-tags"><span>浏览器插件</span><span>知识沉淀</span><span>效率工具</span></div>
+                    <p class="product-card-desc">在浏览和创作时收藏提示词、网页与图片，让零散灵感成为可以检索和复用的个人知识资产。</p>
+                    <ul class="product-card-features"><li>网页内容快速收藏</li><li>标签分类和关键词搜索</li><li>图片反推、同步与备份</li></ul>
+                    <a class="product-card-action" href="#project-prompt-plugin">查看项目</a>
                 </article>
-                <article class="product-card panel">
-                    <div class="product-card-top"><span class="product-card-index">PRODUCT .03</span><span class="product-card-kind">Automation</span></div>
+                <article class="product-overview-card">
+                    <div class="product-card-top"><span class="product-card-index">03</span><span class="product-card-kind">Automation</span></div>
                     <h3>自媒体平台自动发布</h3>
-                    <p>面向多账号、多平台的重复发布流程，探索可配置、可追踪的自动化分发与任务管理体验。</p>
-                    <div class="product-card-tags"><span>流程自动化</span><span>任务管理</span><span>多平台</span></div>
+                    <p class="product-card-desc">集中管理多平台账号、内容排期、发布任务与运营数据，减少重复上传并让执行状态清晰可见。</p>
+                    <ul class="product-card-features"><li>多平台发布和账号管理</li><li>任务排期与状态反馈</li><li>跨平台数据汇总</li></ul>
+                    <a class="product-card-action" href="#project-auto-publish">查看项目</a>
                 </article>
-                <article class="product-card panel">
-                    <div class="product-card-top"><span class="product-card-index">PRODUCT .04</span><span class="product-card-kind">AI Video</span></div>
-                    <h3>视频 AI 自动精剪</h3>
-                    <p>将长素材到可发布片段的剪辑过程产品化，减少人工筛选与重复处理，让视频创作更高效。</p>
-                    <div class="product-card-tags"><span>视频理解</span><span>剪辑流程</span><span>内容效率</span></div>
+                <article class="product-overview-card">
+                    <div class="product-card-top"><span class="product-card-index">04</span><span class="product-card-kind">AI Image</span></div>
+                    <h3>AI 视觉内容处理工作台</h3>
+                    <p class="product-card-desc">把换脸、换装等复杂图像能力封装成双图输入、参数设置、生成预览与结果管理的清晰流程。</p>
+                    <ul class="product-card-features"><li>换脸与换装双模式</li><li>生成参数和细节控制</li><li>结果对比与文件保存</li></ul>
+                    <a class="product-card-action" href="#project-visual-content">查看项目</a>
                 </article>
-                <article class="product-card panel">
-                    <div class="product-card-top"><span class="product-card-index">PRODUCT .05</span><span class="product-card-kind">AI Image</span></div>
-                    <h3>AI 换脸换装工具</h3>
-                    <p>围绕人物形象与服装编辑场景，将复杂的 AI 图像能力封装为更容易理解和操作的创作工具。</p>
-                    <div class="product-card-tags"><span>图像生成</span><span>产品交互</span><span>创作工具</span></div>
-                </article>
-                <article class="product-card panel">
-                    <div class="product-card-top"><span class="product-card-index">PRODUCT .06</span><span class="product-card-kind">Collaboration</span></div>
-                    <h3>自研无线画布工具</h3>
-                    <p>探索局域网环境下的轻量协作与内容组织体验，把零散的想法和信息放进可视化工作空间。</p>
-                    <div class="product-card-tags"><span>无线协作</span><span>可视化画布</span><span>工具产品</span></div>
+                <article class="product-overview-card">
+                    <div class="product-card-top"><span class="product-card-index">05</span><span class="product-card-kind">Visual Workflow</span></div>
+                    <h3>自研无限画布工具</h3>
+                    <p class="product-card-desc">通过节点和连线组织图片、提示词、LLM 与生成模型，让多模态工作流可视化、可复用。</p>
+                    <ul class="product-card-features"><li>自由画布与节点编排</li><li>素材资产统一管理</li><li>多平台模型接入</li></ul>
+                    <a class="product-card-action" href="#project-wireless-canvas">查看项目</a>
                 </article>
             </div>
-        </section>
 
-        
-        <section id="profile" class="profile-intro reveal">
-            <div class="profile-copy">
-                <div class="profile-kicker">
-                    <span class="meta-label">[01] Profile / AI Product Manager</span>
-                </div>
-                <h2 class="profile-name">林耀</h2>
-                <p class="profile-lead">我是一名聚焦 AI Agent、AIGC 自动化和<span class="nowrap">内容生产系统</span>落地的 AI 产品经理。</p>
-                <div class="profile-body">
-                    <div class="profile-paragraphs">
-                        <p class="profile-highlight">从业务流程到 AI Agent，我更关注把复杂能力做成团队真正能使用、能复用、能持续产出的产品系统。</p>
-                        <p>我关注 AI 能力的系统化落地，擅长把业务流程拆解为可执行的 Agent Loop，并产品化为团队可使用、可复用的内部工具。</p>
-                        <p>我的工作不只停留在生成效果，而是从需求拆解、流程设计、工具链选择、界面交互到团队推广，把 Prompt、工作流、自动化脚本和产品界面串成可持续运行的方案。</p>
-                        <p>曾独立负责短视频矩阵 AI Agent 自动化生产系统，支持约 30 人团队、数十个矩阵账号运营，月产出短视频 1000+ 条；也主导搭建 74 套 ComfyUI 工作流，覆盖图像、视频、数字人和商业素材生产。</p>
+            <section id="profile" class="profile-intro reveal">
+                <div class="profile-copy">
+                    <div class="profile-kicker">
+                        <span class="meta-label">[02] Profile / AI Product Manager</span>
                     </div>
-                    <div class="profile-tags" aria-label="核心履历数据">
-                        <div class="profile-tag">
-                            <strong>30人</strong>
-                            <span>团队日常使用</span>
+                    <h2 class="profile-name">林耀</h2>
+                    <p class="profile-lead">我是一名聚焦 AI Agent、AIGC 自动化与<span class="nowrap">内容生产系统</span>落地的 AI 产品经理。</p>
+                    <div class="profile-body">
+                        <div class="profile-paragraphs">
+                            <p class="profile-highlight">擅长把业务需求、模型能力和自动化流程，整合成团队可稳定使用、持续迭代的产品系统。</p>
+                            <p>我是非技术背景出身，产品开发的代码100%都由AI完成。我负责明确产品目标、拆解需求、设计功能与交互，并通过组织上下文、制定开发任务、检查结果和持续修正，推动产品从想法走到可用版本。</p>
+                            <p>在产品开发过程中，我同时负责工作流搭建、功能测试、问题排查、部署验收和后续迭代，并对最终的产品体验与交付结果负责。</p>
+                            <p>熟练使用 ComfyUI，能够围绕图像生成、视频生成、语音合成、角色动画和数字人内容，完成模型选型、节点编排、参数调试、结果校验、异常处理与工作流封装。</p>
+                            <p>能够根据生成质量、运行速度、使用成本和稳定性要求，组合开源模型与闭源商业模型；开源模型实践包括 <span class="keep-together">MiniMax H3</span>、<span class="keep-together">IndexTTS 2.5</span>、<span class="keep-together">Wan-Animate-2</span> 等，并将不同模型接入可复用的内容生产链路。</p>
+                            <p>已沉淀 74 套实际使用的 ComfyUI 工作流，相关产品支持约 30 人团队，月产出短视频 1000+ 条。</p>
                         </div>
-                        <div class="profile-tag">
-                            <strong>1000+</strong>
-                            <span>月产出短视频</span>
-                        </div>
-                        <div class="profile-tag">
-                            <strong>74套</strong>
-                            <span>ComfyUI 工作流</span>
-                        </div>
-                        <div class="profile-tag">
-                            <strong>Agent Loop</strong>
-                            <span>内容生产闭环</span>
+                        <div class="profile-tags" aria-label="核心履历数据">
+                            <div class="profile-tag">
+                                <strong>30人</strong>
+                                <span>团队日常使用</span>
+                            </div>
+                            <div class="profile-tag">
+                                <strong>1000+</strong>
+                                <span>月产出短视频</span>
+                            </div>
+                            <div class="profile-tag">
+                                <strong>74套</strong>
+                                <span>ComfyUI 工作流</span>
+                            </div>
+                            <div class="profile-tag">
+                                <strong>Agent Loop</strong>
+                                <span>内容生产闭环</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
+
+            <div class="project-stories" id="project-stories" aria-label="独立 AI 产品实践"></div>
         </section>
 
         <section id="projects" vid="37">
             <div class="section-header reveal" vid="38">
-                <span class="meta-label" vid="39">[02] Signal Metrics</span>
-                <h2 class="section-title-lines" vid="40"><span>先展示结果，</span><span>再进入过程。</span></h2>
-                <p class="panel-desc" style="max-width: 980px; white-space: nowrap;" vid="41">用关键数据呈现产出规模、团队使用和工作流沉淀，再展开 AI Agent 与 AIGC 自动化项目的落地过程。</p>
+                <span class="meta-label" vid="39">[03] Signal Metrics</span>
+                <h2 class="section-title-lines" vid="40"><span>用真实使用结果，</span><span>证明产品价值。</span></h2>
+                <p class="panel-desc" style="max-width: 980px;" vid="41">以下数据来自已部署产品的实际使用：团队规模、内容产出和工作流沉淀共同构成产品落地的证据。</p>
             </div>
 
             <div class="grid-3 reveal" vid="42">
@@ -1273,7 +1889,7 @@
         
         <section id="works" class="reveal" vid="142">
             <div class="section-header" style="margin-bottom: 3rem;" vid="143">
-                <span class="meta-label" vid="144">[03] Video Works</span>
+                <span class="meta-label" vid="144">[04] Video Works</span>
                 <h2 class="section-title-lines" vid="145"><span>精选视频作品，</span><span>点击查看完整案例。</span></h2>
                 <p class="panel-desc" style="max-width: 680px; margin-top: 1rem;">个人部分作品集丨鼠标点击可查看完整视频案例。</p>
             </div>
@@ -1318,7 +1934,7 @@
         <section id="methodology" vid="64">
             <div class="method-wrapper" vid="65">
                 <div class="method-sticky reveal" vid="66">
-                    <span class="meta-label" vid="67">[04] Product Protocol</span>
+                    <span class="meta-label" vid="67">[05] Product Protocol</span>
                     <h2 class="display-text method-title-zh" vid="68"><span class="method-title-line">从业务流程</span><span class="method-title-line">到 AI Agent</span></h2>
                 </div>
                 
@@ -1350,8 +1966,8 @@
         
         <section class="reveal" vid="87">
             <div class="section-header" style="margin-bottom: 3rem;" vid="88">
-                <span class="meta-label" vid="89">[05] Core Projects</span>
-                <h2 vid="90">两个项目证明核心能力</h2>
+                <span class="meta-label" vid="89">[06] Core Projects</span>
+                <h2 vid="90">三个项目证明核心能力</h2>
             </div>
             
             <div class="stats-grid" vid="91">
@@ -1360,7 +1976,7 @@
                     <div class="stat-num" vid="94">Agent</div>
                     <h4 class="panel-title" style="margin-bottom: 0.5rem;" vid="95">短视频矩阵 AI Agent 自动化生产系统</h4>
                     <p class="panel-desc" vid="96">覆盖对标账号抓取、选题生成、脚本生成、素材生成、视频生成、自动发布和定时发布，形成完整内容生产闭环。</p>
-                    <p class="panel-desc project-proof"><strong>我的职责</strong>独立负责需求拆解、流程设计、模型接入、Agent Loop 搭建、内部工具开发和团队推广使用。</p>
+                    <p class="panel-desc project-proof"><strong>独立完成</strong>需求拆解、流程设计、模型接入、Agent Loop 搭建、内部工具开发和团队推广使用。</p>
                     <p class="panel-desc project-proof"><strong>结果</strong>支持约 30 人团队、数十个矩阵账号运营，月产出短视频 1000+ 条。</p>
                 </div>
                 <div class="stat-item" vid="97">
@@ -1368,15 +1984,15 @@
                     <div class="stat-num text-clay" vid="99">AIGC</div>
                     <h4 class="panel-title" style="margin-bottom: 0.5rem;" vid="101">跨境电商 AIGC 内容资产生产体系</h4>
                     <p class="panel-desc" vid="102">围绕商品图、广告素材、视频内容、数字人和品牌视觉资产，设计并落地多套 ComfyUI 工作流。</p>
-                    <p class="panel-desc project-proof"><strong>我的职责</strong>负责 ComfyUI 工作流设计、Prompt 模板沉淀、自动化流程对接和商业素材生产方案落地。</p>
-                    <p class="panel-desc project-proof"><strong>结果</strong>主导支持 74 套全场景定制化工作流，覆盖文生图、图生视频、高清放大、首尾帧和数字人生成。</p>
+                    <p class="panel-desc project-proof"><strong>独立完成</strong>ComfyUI 工作流设计、Prompt 模板沉淀、自动化流程对接和商业素材生产方案落地。</p>
+                    <p class="panel-desc project-proof"><strong>结果</strong>沉淀 74 套全场景定制化工作流，覆盖文生图、图生视频、高清放大、首尾帧和数字人生成。</p>
                 </div>
                 <div class="stat-item" vid="103">
                     <div class="meta-label" style="margin-bottom: 1rem;" vid="104">Project 03</div>
                     <div class="stat-num" vid="105">UI</div>
                     <h4 class="panel-title" style="margin-bottom: 0.5rem;" vid="107">内部工具产品化与 UI 体验设计</h4>
                     <p class="panel-desc" vid="108">优化信息层级、操作路径、批量任务反馈和异常提示，把复杂 AI 工作流变成团队容易理解的产品工具。</p>
-                    <p class="panel-desc project-proof"><strong>我的职责</strong>自研提示词收藏、多平台聚合解析、批量素材处理和局域网协作工具，并负责界面与交互体验。</p>
+                    <p class="panel-desc project-proof"><strong>独立完成</strong>提示词收藏、多平台聚合解析、批量素材处理和局域网协作工具，以及配套界面与交互体验。</p>
                     <p class="panel-desc project-proof"><strong>结果</strong>降低非技术成员上手成本，让素材、内容和工作流能够在团队内共享和复用。</p>
                 </div>
             </div>
@@ -1385,7 +2001,7 @@
         
         <section class="reveal" vid="109">
              <div class="section-header" style="margin-bottom: 3rem;" vid="110">
-                <span class="meta-label" vid="111">[06] Capability Stack</span>
+                <span class="meta-label" vid="111">[07] Capability Stack</span>
             </div>
             <div class="grid-3" style="background: transparent; border: none;" vid="112">
                 <div style="border: 1px solid var(--grid-line-strong); background: var(--bg);" vid="113">
@@ -1430,12 +2046,10 @@
             <div style="max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 2rem;" vid="170">
                 <svg class="star-motif text-acid" style="width: 48px; height: 48px;" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" vid="171"><path d="M12 0L13.5 10.5L24 12L13.5 13.5L12 24L10.5 13.5L0 12L10.5 10.5L12 0Z" vid="172"></path></svg>
                 <h2 vid="173">保持联系。</h2>
-                <p class="panel-desc" style="font-size: 1.2rem; text-align: center;" vid="174">除作品集首页外，我也整理了 AI 工具、知识库和教程方向，方便了解我在产品方法、工作流和内容表达上的延展能力。联系邮箱：1347742862@qq.com</p>
+                <p class="panel-desc" style="font-size: 1.2rem; text-align: center;" vid="174">如果你正在寻找能够理解业务、设计 AI Agent，并把方案独立做成可体验产品的 AI 产品经理，欢迎联系我。邮箱：1347742862@qq.com</p>
                 <div class="btn-group" style="justify-content: center; margin-top: 1rem;">
                     <a href="mailto:1347742862@qq.com" class="btn btn-primary" vid="175">发送邮件</a>
-                    <a href="ai-tools.html" class="btn btn-secondary">AI工具入口</a>
-                    <a href="knowledge.html" class="btn btn-secondary">知识库入口</a>
-                    <a href="tutorials.html" class="btn btn-secondary">AI教程入口</a>
+                    <a href="#product-showcase" class="btn btn-secondary">回看产品项目</a>
                 </div>
             </div>
         </section>
@@ -1451,6 +2065,10 @@
                 <video class="video-modal-player" controls controlsList="nodownload" disablePictureInPicture playsinline preload="metadata"></video>
             </div>
         </div>
+    </div>
+    <div class="project-image-modal" id="project-image-modal" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-label="项目截图大图预览">
+        <button class="project-image-modal-close" type="button" aria-label="关闭截图预览">关闭</button>
+        <img alt="">
     </div>
 
     <script vid="176">
@@ -1477,6 +2095,15 @@
                 requestAnimationFrame(updateLoader);
             } else {
                 setTimeout(() => {
+                    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+                        const loader = document.getElementById('loader');
+                        if (loader) loader.style.display = 'none';
+                        document.querySelectorAll('.reveal').forEach(element => {
+                            element.style.opacity = '1';
+                            element.style.transform = 'none';
+                        });
+                        return;
+                    }
                     gsap.to('#loader', {
                         yPercent: -100,
                         duration: 1,
@@ -1646,7 +2273,7 @@
         };
 
         function initCursorEffects() {
-            const glowTargets = document.querySelectorAll('.panel:not(.video-card), .stat-item, .future-card, .btn, .grid-3 > div, .product-card');
+            const glowTargets = document.querySelectorAll('.panel:not(.video-card), .stat-item, .future-card, .btn, .grid-3 > div, .product-focus');
 
             glowTargets.forEach((target) => {
                 if (target.classList.contains('video-card')) return;
@@ -1666,12 +2293,178 @@
             });
         }
 
+        function initProjectStories() {
+            const container = document.getElementById('project-stories');
+            if (!container) return;
+
+            const projects = [
+                {
+                    id: 'video-production', badge: '01 · AI Agent · 自动化视频生产平台',
+                    title: '<span class="project-title-line">把选题、文案、视频生成与发布</span><span class="project-title-line">组织成一条可追踪的自动化流程</span>',
+                    lead: '面向内容团队的视频生产工作台，将行业输入、文案生成、视频生成、发布设置和任务结果组织为一条可追踪的生产流程，并保留人工确认与异常处理节点。',
+                    modes: [
+                        ['行业输入', '定义内容方向与生成要求。', '输入行业或主题，设置选题数量、文案风格和字数。', 'assets/products/video-production/01-industry-input.png'],
+                        ['文案生成', '组织选题和脚本生产。', '从候选选题到文案成稿，保留人工选择、编辑与确认节点。', 'assets/products/video-production/02-copy-generation.png'],
+                        ['任务结果', '追踪进度与内容产物。', '集中查看任务状态、完成结果、耗时以及后续发布操作。', 'assets/products/video-production/03-task-results.png']
+                    ]
+                },
+                {
+                    id: 'prompt-plugin', badge: '02 · Browser Plugin · 提示词收藏工具',
+                    title: '<span class="project-title-line">把网页、图片与提示词</span><span class="project-title-line">收进同一个可搜索的 AI 灵感库</span>',
+                    lead: '浏览器侧边栏与完整管理页协同工作，支持图片反推提示词、标签分类、云端同步和 CSV 备份，让收藏、检索与复用集中在同一个工具中。',
+                    modes: [
+                        ['产品概览', '提示词、图片、网页素材一处管理。', '一键收藏网页灵感，支持图片反推提示词、同步与备份。', 'assets/products/prompt-library/01-product-overview.png'],
+                        ['素材库', '分类、搜索、编辑和预览。', '在完整管理页中按文件夹与标签整理提示词，并查看关联图片。', 'assets/products/prompt-library/02-library-management.png'],
+                        ['使用场景', '服务不同内容创作角色。', '覆盖 AI 绘画、电商产品图、自媒体运营与长期提示词整理。', 'assets/products/prompt-library/03-use-cases.png'],
+                        ['核心能力', '收藏、反推、同步与备份。', '将高频操作集中在插件内，减少复制、截图和重复整理。', 'assets/products/prompt-library/04-core-features.png']
+                    ]
+                },
+                {
+                    id: 'auto-publish', badge: '03 · Automation · 自媒体平台自动发布',
+                    title: '<span class="project-title-line">统一管理多平台账号</span><span class="project-title-line">让发布任务与内容表现清晰可见</span>',
+                    lead: '将发布中心、排期日历、视频素材和数据看板整合到一个运营工作台，统一管理多平台账号、发布任务、执行状态与数据反馈。',
+                    modes: [
+                        ['运营总览', '掌握发布进度与账号状态。', '查看本周任务、平台发布次数、活跃账号、发布成功率、今日计划与账号健康度。', 'assets/products/auto-publish/02-operations-overview.png'],
+                        ['数据看板', '查看跨平台发布与增长表现。', '汇总发布次数、成功率、播放、互动和平台分布，辅助运营复盘。', 'assets/products/auto-publish/01-data-dashboard.png'],
+                        ['发布任务', '追踪每条任务的执行进度。', '查看任务队列、处理阶段和账号发布结果，并支持查看发布内容与重新发布。', 'assets/products/auto-publish/03-publishing-task-center.png'],
+                        ['账号管理', '集中管理多平台账号。', '查看抖音、视频号、小红书和快手账号的绑定、验证与登录状态。', 'assets/products/auto-publish/04-account-management.png']
+                    ]
+                },
+                {
+                    id: 'visual-content', badge: '04 · AI Image · AI 视觉内容处理工作台',
+                    title: '<span class="project-title-line">把换脸、换装与视觉编辑能力</span><span class="project-title-line">封装成清晰可控的生成流程</span>',
+                    lead: '通过双图输入、生成参数、结果预览与文件管理，把换脸、换装等复杂能力封装成清晰、可控的视觉内容生成流程。',
+                    modes: [
+                        ['换脸', '用参考脸部替换目标人物脸部。', '保留人物姿态和场景，通过双图输入完成脸部替换并预览结果。', 'assets/products/visual-content/01-face-replacement.png'],
+                        ['换装', '参考服装图完成角色服装替换。', '选择画面比例、分辨率和生成质量，并支持补充细节要求。', 'assets/products/visual-content/02-outfit-replacement.png']
+                    ]
+                },
+                {
+                    id: 'wireless-canvas', badge: '05 · Visual Workflow · 自研无限画布工具',
+                    title: '<span class="project-title-line">在无限画布中编排模型与素材</span><span class="project-title-line">让多模态生成流程可视、可复用</span>',
+                    lead: '通过节点连接图片、提示词、LLM 和生成模型，并结合资产管理与画布交互，让复杂的多模态内容生产链路可视化、可复用。',
+                    modes: [
+                        ['画布总览', '承载大规模可视化工作流。', '在一张无限画布上查看、缩放和管理多组图像与视频生产流程。', 'assets/products/wireless-canvas/01-canvas-overview.png'],
+                        ['工作流编排', '连接输入、分析、循环和生成节点。', '用 LLM 分析商品图，将结果传递给图像生成节点并批量输出方案。', 'assets/products/wireless-canvas/02-workflow-orchestration.png'],
+                        ['资产库', '复用角色、场景与工作流素材。', '将画布中的图片保存为资产，并在生成节点中直接选择调用。', 'assets/products/wireless-canvas/03-asset-library.png'],
+                        ['模型管理', '统一接入多平台、多类型模型。', '从上游同步生图、LLM 与视频模型，集中搜索、选择和应用。', 'assets/products/wireless-canvas/04-model-management.png']
+                    ]
+                }
+            ];
+
+            const createProject = (project) => {
+                const article = document.createElement('article');
+                article.className = 'project-story';
+                article.id = `project-${project.id}`;
+                const tabs = project.modes.map((mode, index) => `
+                    <button class="project-mode-tab" type="button" role="tab" aria-selected="${index === 0}" tabindex="${index === 0 ? '0' : '-1'}" data-mode-index="${index}">
+                        <span class="project-mode-index">${String(index + 1).padStart(2, '0')}</span>
+                        <span class="project-mode-name">${mode[0]}</span>
+                        <span class="project-mode-desc">${mode[1]}</span>
+                    </button>`).join('');
+                article.innerHTML = `
+                    <header class="project-story-head">
+                        <span class="project-story-badge">${project.badge}</span>
+                        <h2 class="project-story-title">${project.title}</h2>
+                        <p class="project-story-lead">${project.lead}</p>
+                    </header>
+                    <div class="project-mode-tabs" role="tablist" aria-label="${project.badge}功能" style="--mode-count: ${project.modes.length}">${tabs}</div>
+                    <div class="project-stage">
+                        <div class="project-stage-note"><strong>${project.modes[0][0]}</strong><span>${project.modes[0][2]}</span></div>
+                        <div class="project-stage-media">
+                            <button class="project-stage-image-button" type="button" aria-label="放大查看${project.modes[0][0]}截图">
+                                <img class="project-stage-image" alt="${project.badge} ${project.modes[0][0]}界面截图" src="${project.modes[0][3]}">
+                            </button>
+                        </div>
+                    </div>`;
+
+                const modeTabs = Array.from(article.querySelectorAll('.project-mode-tab'));
+                const stage = article.querySelector('.project-stage');
+                const noteTitle = article.querySelector('.project-stage-note strong');
+                const noteDesc = article.querySelector('.project-stage-note span');
+                const imageButton = article.querySelector('.project-stage-image-button');
+                const image = article.querySelector('.project-stage-image');
+
+                const activateMode = (index, moveFocus = false) => {
+                    const mode = project.modes[index];
+                    stage.classList.add('is-switching');
+                    window.setTimeout(() => {
+                        modeTabs.forEach((tab, tabIndex) => {
+                            const active = tabIndex === index;
+                            tab.setAttribute('aria-selected', String(active));
+                            tab.setAttribute('tabindex', active ? '0' : '-1');
+                        });
+                        noteTitle.textContent = mode[0];
+                        noteDesc.textContent = mode[2];
+                        image.src = mode[3];
+                        image.alt = `${project.badge} ${mode[0]}界面截图`;
+                        imageButton.setAttribute('aria-label', `放大查看${mode[0]}截图`);
+                        stage.classList.remove('is-switching');
+                        if (moveFocus) modeTabs[index].focus();
+                    }, 120);
+                };
+
+                modeTabs.forEach((tab, index) => {
+                    tab.addEventListener('click', () => activateMode(index));
+                    tab.addEventListener('keydown', (event) => {
+                        let next = index;
+                        if (event.key === 'ArrowRight' || event.key === 'ArrowDown') next = (index + 1) % modeTabs.length;
+                        if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') next = (index - 1 + modeTabs.length) % modeTabs.length;
+                        if (event.key === 'Home') next = 0;
+                        if (event.key === 'End') next = modeTabs.length - 1;
+                        if (next !== index) {
+                            event.preventDefault();
+                            activateMode(next, true);
+                        }
+                    });
+                });
+                imageButton.addEventListener('click', () => openProjectImage(image));
+                return article;
+            };
+
+            container.replaceChildren(...projects.map(createProject));
+        }
+
+        let lastProjectImageTrigger = null;
+
+        function openProjectImage(sourceImage) {
+            const modal = document.getElementById('project-image-modal');
+            const modalImage = modal.querySelector('img');
+            lastProjectImageTrigger = sourceImage.closest('button');
+            modalImage.src = sourceImage.currentSrc || sourceImage.src;
+            modalImage.alt = sourceImage.alt;
+            modal.hidden = false;
+            modal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+            modal.querySelector('.project-image-modal-close').focus();
+        }
+
+        function initProjectImageModal() {
+            const modal = document.getElementById('project-image-modal');
+            const closeButton = modal.querySelector('.project-image-modal-close');
+            const close = () => {
+                modal.hidden = true;
+                modal.setAttribute('aria-hidden', 'true');
+                modal.querySelector('img').removeAttribute('src');
+                document.body.style.overflow = '';
+                lastProjectImageTrigger?.focus();
+            };
+            closeButton.addEventListener('click', close);
+            modal.addEventListener('click', event => {
+                if (event.target === modal) close();
+            });
+            document.addEventListener('keydown', event => {
+                if (event.key === 'Escape' && !modal.hidden) close();
+            });
+        }
+
         function initVideoModal() {
             const modal = document.getElementById('video-modal');
             const modalVideo = modal.querySelector('.video-modal-player');
             const modalTitle = modal.querySelector('.video-modal-title');
             const closeButton = modal.querySelector('.video-modal-close');
             const previewVideos = document.querySelectorAll('.video-card video');
+            let lastVideoTrigger = null;
 
             const getVideoSrc = (video) => {
                 if (!video.dataset.videoSrc) {
@@ -1680,13 +2473,12 @@
                 return video.dataset.videoSrc;
             };
 
-            const restoreVideoPreload = (video) => {
+            const restoreVideoPreview = (video) => {
                 const src = getVideoSrc(video);
                 if (!video.getAttribute('src')) {
                     video.setAttribute('src', src);
                 }
-                video.preload = 'auto';
-                video.load();
+                video.preload = 'none';
             };
 
             const stopVideoLoad = (video) => {
@@ -1703,11 +2495,13 @@
                 modalVideo.pause();
                 modalVideo.removeAttribute('src');
                 modalVideo.load();
-                initBackgroundVideoPreload(previewVideos);
+                previewVideos.forEach(restoreVideoPreview);
                 document.body.style.overflow = '';
+                lastVideoTrigger?.focus();
             };
 
             const openModal = (card) => {
+                lastVideoTrigger = card;
                 const previewVideo = card.querySelector('video');
                 const title = card.querySelector('.video-meta h3')?.textContent?.trim() || '视频作品';
                 const source = getVideoSrc(previewVideo);
@@ -1724,6 +2518,7 @@
                 modal.classList.add('open');
                 modal.setAttribute('aria-hidden', 'false');
                 document.body.style.overflow = 'hidden';
+                closeButton.focus();
                 modalVideo.play().catch(() => {});
             };
 
@@ -1753,31 +2548,80 @@
                     closeModal();
                 }
             });
-
-            initBackgroundVideoPreload(previewVideos);
         }
 
-        function initBackgroundVideoPreload(previewVideos) {
-            const videos = Array.from(previewVideos);
-            if (!videos.length) return;
+        function initVideoCardHover() {
+            document.querySelectorAll('.video-card video').forEach(video => {
+                const card = video.closest('.video-card');
+                card.addEventListener('mouseenter', () => {
+                    if (video.preload !== 'auto') {
+                        video.preload = 'auto';
+                        video.load();
+                    }
+                    video.play().catch(() => {});
+                });
+                card.addEventListener('mouseleave', () => {
+                    video.pause();
+                    video.currentTime = 0;
+                    video.preload = 'none';
+                });
+            });
+        }
 
-            videos.forEach(video => {
-                if (!video.dataset.videoSrc) {
-                    video.dataset.videoSrc = video.getAttribute('src') || video.currentSrc;
-                }
-                if (!video.getAttribute('src')) {
-                    video.setAttribute('src', video.dataset.videoSrc);
-                }
-                video.preload = 'auto';
-                video.load();
+        function protectChineseWords() {
+            if (!Intl.Segmenter) return;
+            const segmenter = new Intl.Segmenter('zh-CN', { granularity: 'word' });
+            const selector = 'h1, h2, h3, h4, p, li, a, button, .meta-label, .profile-tag span';
+
+            document.querySelectorAll(selector).forEach((element) => {
+                const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT, {
+                    acceptNode(node) {
+                        if (!node.data.trim()) return NodeFilter.FILTER_REJECT;
+                        if (node.parentElement?.closest('.keep-word, .keep-together, script, style, svg')) {
+                            return NodeFilter.FILTER_REJECT;
+                        }
+                        return NodeFilter.FILTER_ACCEPT;
+                    }
+                });
+                const textNodes = [];
+                while (walker.nextNode()) textNodes.push(walker.currentNode);
+
+                textNodes.forEach((node) => {
+                    const parts = Array.from(segmenter.segment(node.data));
+                    const fragment = document.createDocumentFragment();
+                    let changed = false;
+
+                    for (let index = 0; index < parts.length; index += 1) {
+                        const part = parts[index];
+                        const isChineseWord = part.isWordLike && /[\u3400-\u9fff]/u.test(part.segment);
+                        if (!isChineseWord) {
+                            fragment.append(document.createTextNode(part.segment));
+                            continue;
+                        }
+
+                        let protectedText = part.segment;
+                        const next = parts[index + 1];
+                        const nextIsChineseWord = next?.isWordLike && /[\u3400-\u9fff]/u.test(next.segment);
+                        if (protectedText.length === 1 && nextIsChineseWord) {
+                            protectedText += next.segment;
+                            index += 1;
+                        }
+
+                        const span = document.createElement('span');
+                        span.className = 'keep-word';
+                        span.textContent = protectedText;
+                        fragment.append(span);
+                        changed = true;
+                    }
+
+                    if (changed) node.replaceWith(fragment);
+                });
             });
         }
 
         
         function initInteractions() {
             gsap.registerPlugin(ScrollTrigger);
-            initCursorEffects();
-            initVideoModal();
 
             
             const reveals = document.querySelectorAll('.reveal');
@@ -1816,23 +2660,22 @@
             });
 
             
-            document.querySelectorAll('.video-card video').forEach(video => {
-                const card = video.closest('.video-card');
-                card.addEventListener('mouseenter', () => {
-                    if (video.preload !== 'auto') {
-                        video.preload = 'auto';
-                        video.load();
-                    }
-                    video.play().catch(() => {});
-                });
-                card.addEventListener('mouseleave', () => {
-                    video.pause();
-                    video.currentTime = 0;
-                });
-            });
+            if (typeof THREE !== 'undefined') initWebGL();
+        }
 
-            
-            initWebGL();
+        initProjectStories();
+        protectChineseWords();
+        initProjectImageModal();
+        initCursorEffects();
+        initVideoModal();
+        initVideoCardHover();
+        if (typeof window.gsap === 'undefined' || typeof window.ScrollTrigger === 'undefined') {
+            const loader = document.getElementById('loader');
+            if (loader) loader.style.display = 'none';
+            document.querySelectorAll('.reveal').forEach(element => {
+                element.style.opacity = '1';
+                element.style.transform = 'none';
+            });
         }
     </script>
 
