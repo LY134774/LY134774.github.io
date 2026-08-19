@@ -214,6 +214,7 @@
             width: 100%;
             max-width: 1320px;
             margin: 0 auto;
+            position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -221,7 +222,7 @@
             text-align: center;
         }
         .hero h1 {
-            font-size: clamp(4rem, 6vw, 7rem);
+            font-size: clamp(4.4rem, 6.7vw, 7.7rem);
             line-height: 1.06;
             letter-spacing: -0.025em;
             color: var(--text-main);
@@ -236,11 +237,113 @@
             white-space: nowrap;
         }
         .hero p {
-            font-size: clamp(1rem, 1.28vw, 1.32rem);
+            font-size: clamp(1.1rem, 1.45vw, 1.45rem);
             line-height: 1.55;
             max-width: 920px;
             color: var(--text-soft);
         }
+        .hero .meta-label {
+            font-size: clamp(0.9rem, 1.05vw, 1.05rem);
+        }
+        .hero .btn {
+            padding: 1.32rem 2.7rem;
+            font-size: 1.12rem;
+        }
+
+        /* brand-ink-open：准星描画、逐字压印与副标打字机 */
+        .brand-ink-crosshair {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 46px;
+            height: 46px;
+            margin: -0.45rem 0 0 -23px;
+            color: var(--clay);
+            opacity: 0;
+            pointer-events: none;
+        }
+        .brand-ink-crosshair line {
+            stroke: currentColor;
+            stroke-width: 3.5;
+            stroke-linecap: round;
+            stroke-dasharray: 100;
+            stroke-dashoffset: 100;
+        }
+        .hero-brand-open-prepared .hero-brand-kicker,
+        .hero-brand-open-prepared .hero-brand-title,
+        .hero-brand-open-prepared .hero-brand-description,
+        .hero-brand-open-prepared .hero-brand-actions {
+            opacity: 0;
+        }
+        .hero-brand-open-prepared .hero-brand-actions {
+            transform: translateY(14px);
+        }
+        .brand-ink-glyph,
+        .brand-ink-kicker-char {
+            display: inline-block;
+            opacity: 0;
+            will-change: transform, filter, opacity;
+        }
+        .brand-ink-glyph {
+            transform: translateY(0.12em) scale(1.42);
+            transform-origin: center bottom;
+            filter: blur(6px);
+        }
+        .brand-ink-kicker-char {
+            min-width: 0.01em;
+            transform: translateY(0.1em);
+        }
+        .brand-ink-kicker-cursor {
+            display: inline-block;
+            width: 0.52em;
+            height: 1.1em;
+            margin-left: 0.28em;
+            vertical-align: -0.16em;
+            background: var(--clay);
+            opacity: 0;
+        }
+        .hero-brand-open-prepared.is-brand-ink-playing .brand-ink-crosshair {
+            animation: brand-ink-crosshair-fade 0.28s ease-out 0.42s forwards;
+        }
+        .hero-brand-open-prepared.is-brand-ink-playing .brand-ink-crosshair line:first-child {
+            animation: brand-ink-draw 0.3s cubic-bezier(.3, 0, .2, 1) forwards;
+        }
+        .hero-brand-open-prepared.is-brand-ink-playing .brand-ink-crosshair line:last-child {
+            animation: brand-ink-draw 0.34s linear 0.24s forwards;
+        }
+        .hero-brand-open-prepared.is-brand-ink-playing .hero-brand-kicker,
+        .hero-brand-open-prepared.is-brand-ink-playing .hero-brand-title,
+        .hero-brand-open-prepared.is-brand-ink-playing .hero-brand-description,
+        .hero-brand-open-prepared.is-brand-ink-playing .hero-brand-actions {
+            animation: brand-ink-show 0.01s linear forwards;
+        }
+        .hero-brand-open-prepared.is-brand-ink-playing .hero-brand-kicker { animation-delay: 0.22s; }
+        .hero-brand-open-prepared.is-brand-ink-playing .hero-brand-title { animation-delay: 0.48s; }
+        .hero-brand-open-prepared.is-brand-ink-playing .hero-brand-description {
+            animation: brand-ink-description-in 0.36s cubic-bezier(.2, .7, .25, 1) 2.15s forwards;
+        }
+        .hero-brand-open-prepared.is-brand-ink-playing .hero-brand-actions {
+            animation: brand-ink-actions-in 0.36s cubic-bezier(.2, .7, .25, 1) 2.5s forwards;
+        }
+        .hero-brand-open-prepared.is-brand-ink-playing .brand-ink-glyph {
+            animation: brand-ink-letterpress 0.42s cubic-bezier(.2, .7, .25, 1) var(--ink-delay) forwards;
+        }
+        .hero-brand-open-prepared.is-brand-ink-playing .brand-ink-kicker-char {
+            animation: brand-ink-kicker-in 0.16s ease-out var(--ink-delay) forwards;
+        }
+        .hero-brand-open-prepared.is-brand-ink-playing .brand-ink-kicker-cursor {
+            animation: brand-ink-cursor 0.48s steps(1, end) 0.7s 5 forwards;
+        }
+        @keyframes brand-ink-draw { to { stroke-dashoffset: 0; } }
+        @keyframes brand-ink-crosshair-fade { 0% { opacity: 1; } 100% { opacity: 0; } }
+        @keyframes brand-ink-show { to { opacity: 1; } }
+        @keyframes brand-ink-letterpress {
+            to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+        }
+        @keyframes brand-ink-kicker-in { to { opacity: 1; transform: translateY(0); } }
+        @keyframes brand-ink-description-in { to { opacity: 1; transform: translateY(0); } }
+        @keyframes brand-ink-actions-in { to { opacity: 1; transform: translateY(0); } }
+        @keyframes brand-ink-cursor { 50% { opacity: 0.85; } }
         .hero-product-map {
             grid-column: 8 / 13;
             position: relative;
@@ -714,7 +817,7 @@
 
         .project-stories {
             display: grid;
-            margin-top: clamp(2rem, 4vw, 4rem);
+            margin-top: clamp(7rem, 10vw, 11rem);
             gap: clamp(6rem, 10vw, 9rem);
         }
         .project-story {
@@ -887,14 +990,17 @@
             font-size: 0.9rem;
             line-height: 1.7;
         }
-        .project-stage.is-switching .project-stage-note,
-        .project-stage.is-switching .project-stage-media {
-            opacity: 0.38;
+        .project-stage.is-switching .project-stage-note {
+            opacity: 0.42;
             transform: translateY(4px);
         }
+        .project-stage.is-switching .project-stage-image {
+            opacity: 0;
+            transform: translateY(7px) scale(0.988);
+        }
         .project-stage-note,
-        .project-stage-media {
-            transition: opacity 0.18s ease, transform 0.18s ease;
+        .project-stage-image {
+            transition: opacity 0.24s ease, transform 0.24s ease;
         }
         .project-image-modal {
             position: fixed;
@@ -1257,13 +1363,14 @@
             display: flex;
             flex-direction: column;
             gap: 10vh;
+            position: relative;
         }
         .step {
             position: relative;
             padding: 1.1rem 1.5rem 1.15rem 3rem;
-            border-left: 1px solid var(--grid-line-strong);
             background: linear-gradient(90deg, rgba(22, 19, 19, 0.78), rgba(22, 19, 19, 0.42) 62%, rgba(22, 19, 19, 0));
             box-shadow: -18px 0 36px rgba(10, 8, 8, 0.24);
+            transition: opacity 0.32s ease, background 0.32s ease;
         }
         .step-num {
             position: absolute;
@@ -1277,6 +1384,7 @@
             font-weight: 700;
             line-height: 1;
             text-shadow: 0 0 14px rgba(255, 214, 204, 0.28);
+            transition: color 0.32s ease, transform 0.32s ease;
         }
         .method-steps .panel-title {
             margin-bottom: 0.85rem !important;
@@ -1423,6 +1531,16 @@
             filter: grayscale(0) contrast(1.02) saturate(1.2);
             opacity: 1;
             transform: scale(1.08);
+        }
+        .video-card.is-video-loading {
+            background-color: var(--surface);
+            background-image: var(--video-poster, none);
+            background-position: center;
+            background-size: cover;
+        }
+        .video-card:hover.is-video-loading video {
+            opacity: 0;
+            transform: scale(1.02);
         }
         .video-card::after {
             content: "";
@@ -1586,7 +1704,47 @@
         
         .reveal {
             opacity: 0;
-            transform: translateY(30px);
+            transform: translateY(32px);
+        }
+        .reveal-item {
+            opacity: 0;
+            transform: translateY(24px);
+        }
+        .reveal.is-revealed {
+            opacity: 1;
+            transform: none;
+        }
+
+        @media (hover: none), (pointer: coarse) {
+            .interactive-glow::before,
+            .interactive-glow::after {
+                display: none;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            .reveal {
+                opacity: 1 !important;
+                transform: none !important;
+            }
+            .reveal-item {
+                opacity: 1 !important;
+                transform: none !important;
+            }
+            .interactive-glow::before,
+            .interactive-glow::after {
+                display: none;
+            }
+            .project-stage-note,
+            .project-stage-image,
+            .step,
+            .step-num {
+                transition: none !important;
+            }
+            .step {
+                opacity: 1;
+            }
         }
 
         @media (max-width: 1024px) {
@@ -1616,6 +1774,9 @@
         }
 
         @media (max-width: 768px) {
+            .project-stories {
+                margin-top: 5.5rem;
+            }
             nav {
                 align-items: center;
                 gap: 0.75rem;
@@ -1645,7 +1806,7 @@
                 padding-top: 6.5rem;
             }
             .hero h1 {
-                font-size: clamp(1.85rem, 7.5vw, 3.15rem);
+                font-size: clamp(2rem, 8.3vw, 3.4rem);
                 line-height: 1.08;
             }
             .hero-title-zh .hero-title-line {
@@ -1736,17 +1897,11 @@
             <a href="#methodology">方法</a>
             <a href="#cta">联系</a>
         </div>
-        <div class="nav-status" vid="19">
-            <div class="status-dot" vid="20"></div>
-            <span class="meta-label" vid="21">PORTFOLIO.ONLINE // AI.READY</span>
-        </div>
     </nav>
 
     <main vid="22">
         
         <section class="hero" vid="23">
-            <div class="monumental-vertical" vid="24">Portfolio</div>
-            
             <div class="hero-content" vid="25">
                 <div style="display: flex; align-items: center; gap: 1rem;" vid="26">
                     <svg class="star-motif text-clay" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" vid="27">
@@ -1767,7 +1922,7 @@
         </section>
 
         <section id="product-showcase">
-            <div class="product-overview-header">
+            <div class="product-overview-header reveal">
                 <span class="meta-label">[01] Deployed Products / Independently Built</span>
                 <h2 class="section-title-lines"><span>5 个独立开发并投入使用的产品</span></h2>
                 <p class="panel-desc">覆盖 AI Agent、浏览器插件、自动发布、视觉生成与无限画布；从需求分析、产品设计、界面交互到开发部署，均由我独立完成。</p>
@@ -1828,15 +1983,15 @@
                         </div>
                         <div class="profile-tags" aria-label="核心履历数据">
                             <div class="profile-tag">
-                                <strong>30人</strong>
+                                <strong class="count-up" data-count="30" data-suffix="人">30人</strong>
                                 <span>团队日常使用</span>
                             </div>
                             <div class="profile-tag">
-                                <strong>1000+</strong>
+                                <strong class="count-up" data-count="1000" data-suffix="+">1000+</strong>
                                 <span>月产出短视频</span>
                             </div>
                             <div class="profile-tag">
-                                <strong>74套</strong>
+                                <strong class="count-up" data-count="74" data-suffix="套">74套</strong>
                                 <span>ComfyUI 工作流</span>
                             </div>
                             <div class="profile-tag">
@@ -1864,7 +2019,7 @@
                         <span class="meta-label" vid="45">Metric .01</span>
                         <svg class="star-motif" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" vid="46"><path d="M12 0L13.5 10.5L24 12L13.5 13.5L12 24L10.5 13.5L0 12L10.5 10.5L12 0Z" vid="47"></path></svg>
                     </div>
-                    <h3 class="panel-title" vid="48">1000+ 月产出短视频</h3>
+                    <h3 class="panel-title count-up" data-count="1000" data-suffix="+ 月产出短视频" vid="48">1000+ 月产出短视频</h3>
                     <p class="panel-desc" vid="49">AI Agent 串联内容链路，支撑矩阵持续产出。</p>
                 </div>
                 <div class="panel" vid="50">
@@ -1872,7 +2027,7 @@
                         <span class="meta-label" vid="52">Metric .02</span>
                         <svg class="star-motif" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" vid="53"><path d="M12 0L13.5 10.5L24 12L13.5 13.5L12 24L10.5 13.5L0 12L10.5 10.5L12 0Z" vid="54"></path></svg>
                     </div>
-                    <h3 class="panel-title" vid="55">30 人团队使用</h3>
+                    <h3 class="panel-title count-up" data-count="30" data-suffix=" 人团队使用" vid="55">30 人团队使用</h3>
                     <p class="panel-desc" vid="56">把复杂 AI 工具封装为团队可理解、可操作、可复用的内部产品，降低非技术成员的使用门槛。</p>
                 </div>
                 <div class="panel" vid="57">
@@ -1880,15 +2035,15 @@
                         <span class="meta-label" vid="59">Metric .03</span>
                         <svg class="star-motif" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" vid="60"><path d="M12 0L13.5 10.5L24 12L13.5 13.5L12 24L10.5 13.5L0 12L10.5 10.5L12 0Z" vid="61"></path></svg>
                     </div>
-                    <h3 class="panel-title text-acid" vid="62">74 套 ComfyUI 工作流</h3>
+                    <h3 class="panel-title text-acid count-up" data-count="74" data-suffix=" 套 ComfyUI 工作流" vid="62">74 套 ComfyUI 工作流</h3>
                     <p class="panel-desc" vid="63">覆盖图像、视频、高清放大、首尾帧、数字人等内容生产场景，沉淀可规模化的 AIGC 生产体系。</p>
                 </div>
             </div>
         </section>
 
         
-        <section id="works" class="reveal" vid="142">
-            <div class="section-header" style="margin-bottom: 3rem;" vid="143">
+        <section id="works" vid="142">
+            <div class="section-header reveal" style="margin-bottom: 3rem;" vid="143">
                 <span class="meta-label" vid="144">[04] Video Works</span>
                 <h2 class="section-title-lines" vid="145"><span>精选视频作品，</span><span>点击查看完整案例。</span></h2>
                 <p class="panel-desc" style="max-width: 680px; margin-top: 1rem;">个人部分作品集丨鼠标点击可查看完整视频案例。</p>
@@ -2046,9 +2201,9 @@
             <div style="max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 2rem;" vid="170">
                 <svg class="star-motif text-acid" style="width: 48px; height: 48px;" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" vid="171"><path d="M12 0L13.5 10.5L24 12L13.5 13.5L12 24L10.5 13.5L0 12L10.5 10.5L12 0Z" vid="172"></path></svg>
                 <h2 vid="173">保持联系。</h2>
-                <p class="panel-desc" style="font-size: 1.2rem; text-align: center;" vid="174">如果你正在寻找能够理解业务、设计 AI Agent，并把方案独立做成可体验产品的 AI 产品经理，欢迎联系我。邮箱：1347742862@qq.com</p>
+                <p class="panel-desc" style="font-size: 1.2rem; text-align: center;" vid="174">如果你正在寻找能把 AI 能力落到真实业务流程里的产品经理，欢迎和我聊聊。<br>微信：LYfeel5833546</p>
                 <div class="btn-group" style="justify-content: center; margin-top: 1rem;">
-                    <a href="mailto:1347742862@qq.com" class="btn btn-primary" vid="175">发送邮件</a>
+                    <a href="#works" class="btn btn-secondary" vid="175">回看视频项目</a>
                     <a href="#product-showcase" class="btn btn-secondary">回看产品项目</a>
                 </div>
             </div>
@@ -2083,6 +2238,8 @@
         });
         
         
+        const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+        const finePointerQuery = window.matchMedia('(hover: hover) and (pointer: fine)');
         const counter = document.querySelector('.counter');
         let count = 0;
         
@@ -2102,6 +2259,13 @@
                             element.style.opacity = '1';
                             element.style.transform = 'none';
                         });
+                        initHeroBrandOpen();
+                        return;
+                    }
+                    if (reducedMotionQuery.matches) {
+                        const loader = document.getElementById('loader');
+                        if (loader) loader.style.display = 'none';
+                        initInteractions();
                         return;
                     }
                     gsap.to('#loader', {
@@ -2354,7 +2518,7 @@
 
             const createProject = (project) => {
                 const article = document.createElement('article');
-                article.className = 'project-story';
+                article.className = 'project-story reveal';
                 article.id = `project-${project.id}`;
                 const tabs = project.modes.map((mode, index) => `
                     <button class="project-mode-tab" type="button" role="tab" aria-selected="${index === 0}" tabindex="${index === 0 ? '0' : '-1'}" data-mode-index="${index}">
@@ -2385,10 +2549,20 @@
                 const imageButton = article.querySelector('.project-stage-image-button');
                 const image = article.querySelector('.project-stage-image');
 
+                let activeModeIndex = 0;
+                let switchToken = 0;
+
                 const activateMode = (index, moveFocus = false) => {
+                    if (index === activeModeIndex) {
+                        if (moveFocus) modeTabs[index].focus();
+                        return;
+                    }
                     const mode = project.modes[index];
-                    stage.classList.add('is-switching');
-                    window.setTimeout(() => {
+                    const token = ++switchToken;
+                    activeModeIndex = index;
+
+                    const applyMode = () => {
+                        if (token !== switchToken) return;
                         modeTabs.forEach((tab, tabIndex) => {
                             const active = tabIndex === index;
                             tab.setAttribute('aria-selected', String(active));
@@ -2399,9 +2573,27 @@
                         image.src = mode[3];
                         image.alt = `${project.badge} ${mode[0]}界面截图`;
                         imageButton.setAttribute('aria-label', `放大查看${mode[0]}截图`);
-                        stage.classList.remove('is-switching');
+                        requestAnimationFrame(() => stage.classList.remove('is-switching'));
                         if (moveFocus) modeTabs[index].focus();
-                    }, 120);
+                    };
+
+                    if (reducedMotionQuery.matches) {
+                        applyMode();
+                        return;
+                    }
+
+                    stage.classList.add('is-switching');
+                    const preloadImage = new Image();
+                    let settled = false;
+                    const finishSwitch = () => {
+                        if (settled) return;
+                        settled = true;
+                        window.setTimeout(applyMode, 120);
+                    };
+                    preloadImage.addEventListener('load', finishSwitch, { once: true });
+                    preloadImage.addEventListener('error', finishSwitch, { once: true });
+                    preloadImage.src = mode[3];
+                    if (preloadImage.complete) finishSwitch();
                 };
 
                 modeTabs.forEach((tab, index) => {
@@ -2553,17 +2745,39 @@
         function initVideoCardHover() {
             document.querySelectorAll('.video-card video').forEach(video => {
                 const card = video.closest('.video-card');
+                const poster = video.poster;
+                let isHovering = false;
+
+                if (poster) {
+                    card.style.setProperty('--video-poster', `url("${poster}")`);
+                }
+
+                const showLoadedVideo = () => {
+                    card.classList.remove('is-video-loading');
+                    if (isHovering) video.play().catch(() => {});
+                };
+
                 card.addEventListener('mouseenter', () => {
+                    isHovering = true;
+
+                    if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
+                        showLoadedVideo();
+                        return;
+                    }
+
+                    card.classList.add('is-video-loading');
                     if (video.preload !== 'auto') {
                         video.preload = 'auto';
                         video.load();
                     }
-                    video.play().catch(() => {});
+                    video.addEventListener('canplay', showLoadedVideo, { once: true });
                 });
                 card.addEventListener('mouseleave', () => {
+                    isHovering = false;
                     video.pause();
                     video.currentTime = 0;
                     video.preload = 'none';
+                    card.classList.remove('is-video-loading');
                 });
             });
         }
@@ -2620,8 +2834,190 @@
         }
 
         
+        function prepareLayeredReveals() {
+            const groupSelectors = ['.product-overview-grid', '.grid-3', '.video-grid', '.stats-grid', '.future-grid'];
+            groupSelectors.forEach((selector) => {
+                document.querySelectorAll(selector).forEach((group) => {
+                    const items = Array.from(group.children);
+                    if (items.length < 2) return;
+                    group.classList.add('reveal-group');
+                    items.forEach(item => item.classList.add('reveal-item'));
+                });
+            });
+        }
+
+        function initLayeredReveals(reduceMotion) {
+            document.querySelectorAll('.reveal-group').forEach((group) => {
+                const items = Array.from(group.children).filter(item => item.classList.contains('reveal-item'));
+                if (!items.length) return;
+
+                if (reduceMotion) {
+                    items.forEach(item => {
+                        item.classList.remove('reveal-item');
+                        item.style.opacity = '1';
+                        item.style.transform = 'none';
+                    });
+                    return;
+                }
+
+                gsap.to(items, {
+                    scrollTrigger: {
+                        trigger: group,
+                        start: 'top 84%',
+                        once: true
+                    },
+                    opacity: 1,
+                    y: 0,
+                    duration: 1.2,
+                    stagger: 0.15,
+                    ease: 'power3.out',
+                    onComplete: () => {
+                        items.forEach(item => item.classList.remove('reveal-item'));
+                        gsap.set(items, { clearProps: 'opacity,transform' });
+                    }
+                });
+            });
+        }
+
+        function initCountUps(reduceMotion) {
+            document.querySelectorAll('.count-up').forEach((element) => {
+                const target = Number(element.dataset.count);
+                const suffix = element.dataset.suffix || '';
+                const finalText = `${target}${suffix}`;
+
+                if (!Number.isFinite(target) || reduceMotion) {
+                    element.textContent = finalText;
+                    return;
+                }
+
+                const counterState = { value: 0 };
+                element.textContent = `0${suffix}`;
+                gsap.to(counterState, {
+                    value: target,
+                    duration: 1.15,
+                    ease: 'power2.out',
+                    scrollTrigger: {
+                        trigger: element,
+                        start: 'top 88%',
+                        once: true
+                    },
+                    onUpdate: () => {
+                        element.textContent = `${Math.round(counterState.value)}${suffix}`;
+                    },
+                    onComplete: () => {
+                        element.textContent = finalText;
+                    }
+                });
+            });
+        }
+
+        function initMethodProgress(reduceMotion) {
+            const methodSteps = document.querySelector('.method-steps');
+            const steps = Array.from(methodSteps?.querySelectorAll('.step') || []);
+            if (!methodSteps || !steps.length) return;
+
+            const setActiveStep = (activeIndex) => {
+                steps.forEach((step, index) => {
+                    step.classList.toggle('is-active', index === activeIndex);
+                });
+            };
+
+            if (reduceMotion) {
+                steps.forEach(step => step.classList.add('is-active'));
+                return;
+            }
+
+            setActiveStep(0);
+            steps.forEach((step, index) => {
+                ScrollTrigger.create({
+                    trigger: step,
+                    start: 'top 56%',
+                    end: 'bottom 44%',
+                    onEnter: () => setActiveStep(index),
+                    onEnterBack: () => setActiveStep(index)
+                });
+            });
+
+        }
+
+        function prepareHeroBrandOpen() {
+            if (reducedMotionQuery.matches) return;
+
+            const hero = document.querySelector('.hero');
+            const heroContent = hero?.querySelector('.hero-content');
+            const title = hero?.querySelector('.hero-title-zh');
+            const description = hero?.querySelector('.hero-content > p');
+            const actions = hero?.querySelector('.hero-content > .btn-group');
+            const kickerRow = hero?.querySelector('.hero-content > div:first-child');
+            const kicker = kickerRow?.querySelector('.meta-label');
+            if (!hero || !heroContent || !title || !description || !kickerRow || !kicker) return;
+
+            const crosshair = document.createElement('svg');
+            crosshair.className.baseVal = 'brand-ink-crosshair';
+            crosshair.setAttribute('viewBox', '0 0 64 64');
+            crosshair.setAttribute('aria-hidden', 'true');
+            crosshair.innerHTML = '<line x1="32" y1="3" x2="32" y2="61" pathLength="100"></line><line x1="3" y1="32" x2="61" y2="32" pathLength="100"></line>';
+            heroContent.prepend(crosshair);
+
+            let titleIndex = 0;
+            title.querySelectorAll('.hero-title-line').forEach(line => {
+                const source = line.textContent;
+                line.replaceChildren();
+                Array.from(source).forEach(character => {
+                    const glyph = document.createElement('span');
+                    glyph.className = 'brand-ink-glyph';
+                    glyph.textContent = character;
+                    glyph.style.setProperty('--ink-delay', `${0.48 + titleIndex * 0.052}s`);
+                    line.append(glyph);
+                    titleIndex += 1;
+                });
+            });
+
+            const kickerText = kicker.textContent;
+            kicker.replaceChildren();
+            kicker.setAttribute('aria-label', kickerText);
+            Array.from(kickerText).forEach((character, index) => {
+                const characterNode = document.createElement('span');
+                characterNode.className = 'brand-ink-kicker-char';
+                characterNode.textContent = character === ' ' ? '\u00a0' : character;
+                characterNode.style.setProperty('--ink-delay', `${0.22 + index * 0.028}s`);
+                kicker.append(characterNode);
+            });
+            const cursor = document.createElement('span');
+            cursor.className = 'brand-ink-kicker-cursor';
+            cursor.setAttribute('aria-hidden', 'true');
+            kicker.append(cursor);
+
+            kickerRow.classList.add('hero-brand-kicker');
+            title.classList.add('hero-brand-title');
+            description.classList.add('hero-brand-description');
+            actions?.classList.add('hero-brand-actions');
+            hero.classList.add('hero-brand-open-prepared');
+        }
+
+        function initHeroBrandOpen() {
+            const hero = document.querySelector('.hero.hero-brand-open-prepared');
+            if (!hero || reducedMotionQuery.matches) return;
+            requestAnimationFrame(() => hero.classList.add('is-brand-ink-playing'));
+        }
+
         function initInteractions() {
             gsap.registerPlugin(ScrollTrigger);
+
+            const reduceMotion = reducedMotionQuery.matches;
+
+            if (reduceMotion) {
+                document.querySelectorAll('.reveal').forEach(element => {
+                    element.style.opacity = '1';
+                    element.style.transform = 'none';
+                });
+                initLayeredReveals(true);
+                initCountUps(true);
+                initMethodProgress(true);
+                return;
+            }
+
+            initHeroBrandOpen();
 
             
             const reveals = document.querySelectorAll('.reveal');
@@ -2630,26 +3026,22 @@
                     scrollTrigger: {
                         trigger: reveal,
                         start: "top 85%",
-                        toggleActions: "play none none reverse"
+                        once: true
                     },
                     opacity: 1,
                     y: 0,
-                    duration: 1,
-                    ease: "power3.out"
+                    duration: 1.3,
+                    ease: "power3.out",
+                    onComplete: () => {
+                        reveal.classList.add('is-revealed');
+                        gsap.set(reveal, { clearProps: 'opacity,transform' });
+                    }
                 });
             });
 
-            
-            gsap.to('.monumental-vertical', {
-                scrollTrigger: {
-                    trigger: '.hero',
-                    start: "top top",
-                    end: "bottom top",
-                    scrub: 1
-                },
-                y: 200,
-                opacity: 0
-            });
+            initLayeredReveals(false);
+            initCountUps(false);
+            initMethodProgress(false);
 
             
             gsap.to('#marquee', {
@@ -2664,15 +3056,21 @@
         }
 
         initProjectStories();
+        prepareLayeredReveals();
         protectChineseWords();
+        prepareHeroBrandOpen();
         initProjectImageModal();
-        initCursorEffects();
+        if (!reducedMotionQuery.matches && finePointerQuery.matches) initCursorEffects();
         initVideoModal();
-        initVideoCardHover();
+        if (!reducedMotionQuery.matches && finePointerQuery.matches) initVideoCardHover();
         if (typeof window.gsap === 'undefined' || typeof window.ScrollTrigger === 'undefined') {
             const loader = document.getElementById('loader');
             if (loader) loader.style.display = 'none';
             document.querySelectorAll('.reveal').forEach(element => {
+                element.style.opacity = '1';
+                element.style.transform = 'none';
+            });
+            document.querySelectorAll('.reveal-item').forEach(element => {
                 element.style.opacity = '1';
                 element.style.transform = 'none';
             });
